@@ -4,6 +4,8 @@ import httpStatus from "http-status"
 import { authServices } from "./auth.service"
 import { catchAsync } from "../../utils/catchAsync"
 import { sendResponse } from "../../utils/sendResponse"
+import { jwtUtils } from "../../utils/jwt"
+import config from "../../config"
 
 
 
@@ -52,7 +54,7 @@ if(typeof password !== "string" || password.length < 7 ){
   })
 } 
 
-const user = await authServices.registerUser(payload)
+const user = await authServices.registerUserIntoDB(payload)
 
  sendResponse(res, {
          success: true,
@@ -103,7 +105,7 @@ if(typeof password !== "string"){
   })
 } 
 
-const {accessToken, refreshToken} = await authServices.loginUser(payload)
+const {accessToken, refreshToken} = await authServices.loginUserIntoDB(payload)
 
 res.cookie("accessToken", accessToken, {
   httpOnly:true,
@@ -133,7 +135,29 @@ sendResponse(res, {
 })
 
 
+const getMyProfile = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+
+  const {accessToken} = req.cookies
+  const {data} = jwtUtils.verifyToken(accessToken, config.jwt_access_secret)
+
+  const profile = await authServices.getMyProfileFromDB(data.id)
+
+  sendResponse(res,{
+    success: true,
+            statusCode: httpStatus.OK,
+            message:'User profile fetched successfully!!',
+            data:{
+               profile 
+
+            }
+  })
+
+  res.send('get my profile')
+
+})
+
 export const authController = {
     registerUser,
-    loginUser
+    loginUser,
+    getMyProfile
 } 

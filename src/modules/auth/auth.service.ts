@@ -5,7 +5,7 @@ import { ILoginUserPayload, IRegisterUserPayload } from './auth.interface'
 import { jwtUtils } from '../../utils/jwt'
 import { SignOptions } from 'jsonwebtoken'
 
-const registerUser = async(payload: IRegisterUserPayload)=>{
+const registerUserIntoDB = async(payload: IRegisterUserPayload)=>{
     const {name,email, password, phone,role, profileImage} = payload
 
     const isUserExist = await prisma.user.findUnique({
@@ -44,7 +44,7 @@ const user = await prisma.user.findUnique({
 return user;
 }
 
-const loginUser = async(payload: ILoginUserPayload)=>{
+const loginUserIntoDB = async(payload: ILoginUserPayload)=>{
     const {email, password} = payload
 
     const user = await prisma.user.findUniqueOrThrow({
@@ -75,7 +75,23 @@ const loginUser = async(payload: ILoginUserPayload)=>{
     return {accessToken,refreshToken}
 }
 
+const getMyProfileFromDB = async(userId:string)=>{
+const user = await prisma.user.findUniqueOrThrow({
+    where:{
+        id:userId,
+        
+    },
+    omit:{
+            password:true
+        }
+})
+
+return user
+}
+
 export const authServices = {
-    registerUser,
-    loginUser
+    registerUserIntoDB,
+    loginUserIntoDB,
+    getMyProfileFromDB
 } 
+   
