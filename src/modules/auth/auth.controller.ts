@@ -12,13 +12,13 @@ const registerUser = catchAsync(async(req:Request, res:Response, next:NextFuncti
 const payload = req.body
 const regexOfEmail =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-const {name,email, password,role} = payload
+const {name,email, password} = payload
 
 if(!name || !email || !password){
     return sendResponse(res, {
         success:false,
         statusCode:httpStatus.BAD_REQUEST,
-         message:'Name, email, password fields are required',
+         message:'Name, email and password fields are required',
          errorDetails: null
 
     })
@@ -37,7 +37,7 @@ if(typeof email !== "string" || !regexOfEmail.test(email) ){
  return sendResponse(res, {
     success: false,
     statusCode:httpStatus.BAD_REQUEST,
-    message: "Please provide a valid email format",
+    message: "Please provide a valid email address",
     errorDetails: null
   })
 } 
@@ -70,7 +70,40 @@ const user = await authServices.registerUser(payload)
 const loginUser = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
 const payload = req.body
 
-const result = await authServices.loginUser(payload)
+const regexOfEmail =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const {email, password} = payload
+
+if(!email || !password){
+    return sendResponse(res, {
+        success:false,
+        statusCode:httpStatus.BAD_REQUEST,
+         message:'Email and password fields are required',
+         errorDetails: null
+
+    })
+}
+
+if(typeof email !== "string" || !regexOfEmail.test(email)){
+ return sendResponse(res, {
+    success: false,
+    statusCode:httpStatus.BAD_REQUEST,
+    message: "Please provide a valid email address",
+    errorDetails: null
+  })
+} 
+
+
+if(typeof password !== "string"){
+ return sendResponse(res, {
+    success: false,
+    statusCode:httpStatus.BAD_REQUEST,
+    message: "Password must be a string",
+    errorDetails: null
+  })
+} 
+
+const {accessToken, refreshToken} = await authServices.loginUser(payload)
 
 
 sendResponse(res, {
@@ -78,7 +111,8 @@ sendResponse(res, {
             statusCode: httpStatus.OK,
             message:'User logged in successfully!!',
             data:{
-              result
+             accessToken,
+             refreshToken
             }
 })
 

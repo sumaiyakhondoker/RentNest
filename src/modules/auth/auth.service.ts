@@ -1,7 +1,9 @@
 import bcrypt from 'bcryptjs'
 import config from '../../config'
 import { prisma } from '../../lib/prisma'
-import { IRegisterUserPayload } from './auth.interface'
+import { ILoginUserPayload, IRegisterUserPayload } from './auth.interface'
+import { jwtUtils } from '../../utils/jwt'
+import { SignOptions } from 'jsonwebtoken'
 
 const registerUser = async(payload: IRegisterUserPayload)=>{
     const {name,email, password, phone,role, profileImage} = payload
@@ -42,8 +44,38 @@ const user = await prisma.user.findUnique({
 return user;
 }
 
+const loginUser = async(payload: ILoginUserPayload)=>{
+    const {email, password} = payload
 
+    const user = await prisma.user.findUniqueOrThrow({
+        where:{email}
+    })
+
+    if(user.accountStatus === 'BANNED'){
+        throw new Error("Your account has been banned. Please contact to the support team")
+    }
+
+    const isPasswordMatched = await bcrypt.compare(password, user.password)
+
+    if(!isPasswordMatched){
+        throw new Error("Invalid credentials!")
+    }
+
+    const jwtPayload = {
+        id:user.id,
+        name:user.name,
+        email:user.email,
+        role:user.role
+    }
+
+    const accessToken = jwtUtils.createToken(jwtPayload, config.jwt_access_secret, config.jwt_access_expires_in as SignOptions)
+
+    const refreshToken = jwtUtils.createToken(jwtPayload, config.jwt_refresh_secret, config.jwt_refresh_expires_in as SignOptions)
+
+    return {accessToken,refreshToken}
+}
 
 export const authServices = {
-    registerUser
+    registerUser,
+    loginUser
 } 
