@@ -137,13 +137,13 @@ sendResponse(res, {
 
 const getMyProfile = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
 
-  const {accessToken} = req.cookies
-  const {data} = jwtUtils.verifyToken(accessToken, config.jwt_access_secret)
 
-  const profile = await authServices.getMyProfileFromDB(data.id)
+  const userId = req.user?.id
+
+  const profile = await authServices.getMyProfileFromDB(userId as string)
 
   sendResponse(res,{
-    success: true,
+            success: true,
             statusCode: httpStatus.OK,
             message:'User profile fetched successfully!!',
             data:{
