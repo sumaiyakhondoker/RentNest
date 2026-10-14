@@ -46,7 +46,7 @@ export const auth = (...requiredRoles: Role[])=>{
             sendResponse(res, {
                 success: false,
             statusCode: httpStatus.FORBIDDEN,
-            message:  "You do not have permission to access this resource."
+            message:  "Forbidden: You do not have permission to access this resource."
 ,
             })
         }

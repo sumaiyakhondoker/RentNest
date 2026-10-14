@@ -3,8 +3,9 @@ import cors from "cors";
 
 import express,{ Application, Request, Response } from "express";
 import config from "./config";
-import { userRoutes } from "./modules/user/user.route";
+import { landlordRoutes} from "./modules/landlord/landlord.route";
 import { authRoutes } from "./modules/auth/auth.route";
+import { categoryRoutes } from "./modules/category/category.route";
 
 const app:Application = express()
 
@@ -21,7 +22,10 @@ app.get('/', (req:Request, res:Response)=>{
 })
 
 app.use('/api/auth', authRoutes)
-// app.use('/api/users', userRoutes)
+app.use('/api/landlord', landlordRoutes)
+app.use('/api/categories', categoryRoutes)
+
+
 
 
 export default app;

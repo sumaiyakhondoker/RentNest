@@ -145,7 +145,7 @@ const getMyProfile = catchAsync(async(req:Request, res:Response, next:NextFuncti
   sendResponse(res,{
             success: true,
             statusCode: httpStatus.OK,
-            message:'User profile fetched successfully!!',
+            message:'Current user profile retrived successfully!!',
             data:{
                profile 
 
