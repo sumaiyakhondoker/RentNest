@@ -56,10 +56,23 @@ const createRentalRequestIntoDB = async(payload:IRentalRequestPayload)=>{
     return allRentalRequests
 }
 
+const getRentalRequestByIdFromDB = async(rentalRequestId:string)=>{
+    const rentalRequest = await prisma.rentalRequest.findUniqueOrThrow({
+        where:{
+            id:rentalRequestId
+        },
+        include:{
+            property:true
+        }
+    })
+
+    return rentalRequest
+}
 
 export const rentalRequestServices = {
     createRentalRequestIntoDB,
 getAllRentalRequestFromDB,
+getRentalRequestByIdFromDB
 
 }
 

@@ -75,8 +75,30 @@ const getAllRentalRequest = catchAsync(async(req:Request, res:Response, next:Nex
 })
 
 
+const getRentalRequestById = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+
+  const id = req.params.id
+
+  const uuidRegex =  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+  if(!id){
+     throw new Error('Rental request id is required')
+  }
+  if(typeof id !== 'string' || !uuidRegex.test(id))
+throw new Error('Rental request id must be a string and should be given in a valid format')
+
+  const result = await rentalRequestServices.getRentalRequestByIdFromDB(id)
+  sendResponse(res, {
+    success: true,
+            statusCode: httpStatus.OK,
+            message:'Rental request details retrived successfully!!',
+            data: result
+  })
+})
+
+
 export const rentalRequestController = {
     createRentalRequest,
 getAllRentalRequest,
+getRentalRequestById
 
 }
