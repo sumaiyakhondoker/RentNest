@@ -7,11 +7,14 @@ const createPropertyIntoDB = async(landlordId:string,payload: ICreatePropertyPay
 
     const result = await prisma.property.create({
         data:{
+            
             ...payload,
             landlordId
         }
 
     })
+
+    console.log(result);
 
     return result
 }
