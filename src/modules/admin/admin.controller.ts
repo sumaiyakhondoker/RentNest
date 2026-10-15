@@ -23,7 +23,7 @@ const updateUserStatus = catchAsync(async(req:Request, res:Response, next:NextFu
       const uuidRegex =  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
     const {accountStatus} = req.body
-    
+
     if(!userId){
          throw new Error("User id is required")
     }
@@ -55,28 +55,28 @@ const updateUserStatus = catchAsync(async(req:Request, res:Response, next:NextFu
 })
 
 
-// const getAllProperties = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-//     const result = await adminServices.getAllPropertiesFromDB()
-//     sendResponse(res, {
-//             success: true,
-//             statusCode: httpStatus.OK,
-//             message:'All properties retrived successfully!!',
-//             data: result
-//   })
-// })
-// const getAllRentalRequests = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-//     const result = await adminServices.getAllRentalRequestsFromDB()
-//     sendResponse(res, {
-//             success: true,
-//             statusCode: httpStatus.OK,
-//             message:'All rental requests retrived successfully!!',
-//             data: result
-//   })
-// })
+const getAllProperties = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+    const result = await adminServices.getAllPropertiesFromDB()
+    sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message:'All properties retrived successfully!!',
+            data: result
+  })
+})
+const getAllRentalRequests = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+    const result = await adminServices.getAllRentalRequestsFromDB()
+    sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message:'All rental requests retrived successfully!!',
+            data: result
+  })
+})
 
 export const adminController = {
     getAllUsers,
 updateUserStatus,
-// getAllProperties,
-// getAllRentalRequests
+getAllProperties,
+getAllRentalRequests
 }

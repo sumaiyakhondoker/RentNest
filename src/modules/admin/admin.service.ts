@@ -41,18 +41,18 @@ const updateUserStatusIntoDB = async(accountStatus:AccountStatus, userId:string)
 
     return updatedUser
 }
-// const getAllPropertiesFromDB =async()=>{
-//      const allProperties = await prisma.property.findMany()
-//     return allProperties;
-// }
-// const getAllRentalRequestsFromDB = async()=>{
-//    const allRentalRequests = await prisma.rentalRequest.findMany()
-//     return allRentalRequests;
-// }
+const getAllPropertiesFromDB =async()=>{
+     const allProperties = await prisma.property.findMany()
+    return allProperties;
+}
+const getAllRentalRequestsFromDB = async()=>{
+   const allRentalRequests = await prisma.rentalRequest.findMany()
+    return allRentalRequests;
+}
 
 export const adminServices = {
     getAllUsersFromDB,
 updateUserStatusIntoDB,
-// getAllPropertiesFromDB,
-// getAllRentalRequestsFromDB
+getAllPropertiesFromDB,
+getAllRentalRequestsFromDB
 }
