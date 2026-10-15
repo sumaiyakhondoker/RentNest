@@ -10,10 +10,8 @@ const createRentalRequest = catchAsync(async(req:Request, res:Response, next:Nex
 
     const tenantId =  req.user?.id
 
-    if(!tenantId){
-      throw new Error('Tenant id is not found')
-    }
-let { propertyId,
+   
+const { propertyId,
   moveInDate,
   message
   } = req.body
@@ -21,11 +19,15 @@ let { propertyId,
 
   const uuidRegex =  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
+
+   if(!tenantId){
+      throw new Error('Tenant id is not found')
+    }
   if(!propertyId){
     throw new Error('Property id is required')
   }
   if(typeof propertyId !== 'string' || !uuidRegex.test(propertyId)){
-    throw new Error('Property id must be a string and should give in a valid format')
+    throw new Error('Property id must be a string and should be given in a valid format')
   }
 
  
@@ -35,11 +37,12 @@ let { propertyId,
 
   }
 
+  
   if(message && typeof message !== 'string'){
-     throw new Error('Message must be a string')
+    throw new Error('Message must be a string')
   }
-
-const parsedMoveInDate = new Date(moveInDate)
+  
+  const parsedMoveInDate = new Date(moveInDate)
 
   const rentalRequestData:IRentalRequestPayload = {
   propertyId,
@@ -50,7 +53,7 @@ const parsedMoveInDate = new Date(moveInDate)
 
   const result = await rentalRequestServices.createRentalRequestIntoDB(rentalRequestData)
   sendResponse(res, {
-    success: true,
+            success: true,
             statusCode: httpStatus.OK,
             message:'Rental request created successfully!!',
             data: result
@@ -59,12 +62,21 @@ const parsedMoveInDate = new Date(moveInDate)
 
 
 })
-const getAllRentalRequest = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
-const getRentalRequestById = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
+
+const getAllRentalRequest = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+  const tenantId = req.user?.id
+  const result = await rentalRequestServices.getAllRentalRequestFromDB(tenantId as string)
+  sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message:'All rental requests retrived successfully!!',
+            data: result
+  })
+})
 
 
 export const rentalRequestController = {
     createRentalRequest,
 getAllRentalRequest,
-getRentalRequestById
+
 }

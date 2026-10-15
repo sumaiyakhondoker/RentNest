@@ -8,6 +8,8 @@ const createProperty = catchAsync(async(req:Request, res:Response, next:NextFunc
         const payload = req.body
         // const {} = 
 
+        // validation implementation
+
         const landlordId = req.user?.id
         const result = await landlordServices.createPropertyIntoDB(landlordId as string,payload)
         sendResponse(res, {

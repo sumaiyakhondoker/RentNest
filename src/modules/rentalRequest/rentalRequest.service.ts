@@ -4,6 +4,36 @@ import { IRentalRequestPayload } from "./rentalRequest.interface"
 
 
 const createRentalRequestIntoDB = async(payload:IRentalRequestPayload)=>{
+    const {propertyId,tenantId} = payload
+
+    const property = await prisma.property.findUnique({
+        where:{
+            id:propertyId
+        }
+    })
+
+    if(!property){
+        throw new Error('This property does not exists')
+    }
+
+    if(property.availability !== 'AVAILABLE'){
+        throw new Error('This property is not available for rent')
+    }
+
+    const isRentalRequestExist = await prisma.rentalRequest.findFirst({
+        where:{
+            propertyId,
+            tenantId,
+            status:"PENDING"
+
+        }
+    })
+
+
+    if(isRentalRequestExist){
+        throw new Error('You have already requested for renting that property')
+    }
+
     const createdRentalRequest = await prisma.rentalRequest.create({
         data:{
             ...payload
@@ -12,13 +42,25 @@ const createRentalRequestIntoDB = async(payload:IRentalRequestPayload)=>{
     
     return createdRentalRequest
 }
-const getAllRentalRequestFromDB = async()=>{}
-const getRentalRequestByIdFromDB = async()=>{}
+ const getAllRentalRequestFromDB = async(tenantId:string)=>{
+    const allRentalRequests = await prisma.rentalRequest.findMany({
+        where:{
+           tenantId
+        },
+        include:{
+            property:true
+        }
+    })
+
+
+    return allRentalRequests
+}
+
 
 export const rentalRequestServices = {
     createRentalRequestIntoDB,
 getAllRentalRequestFromDB,
-getRentalRequestByIdFromDB
+
 }
 
 
