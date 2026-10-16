@@ -11,7 +11,6 @@ enum AccountStatus {
 
 enum PropertyAvailability {
     AVAILABLE
-    UNAVAILABLE
     RENTED
 }
 
