@@ -13,7 +13,7 @@ const createReview = catchAsync(async(req:Request, res:Response, next:NextFuncti
     const payload = req.body
 
     const {propertyId, rating, comment} = payload
-    const ratingNumber = Number(rating)
+    
 
       const uuidRegex =  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
@@ -21,7 +21,7 @@ const createReview = catchAsync(async(req:Request, res:Response, next:NextFuncti
      if(!tenantId){
       throw new Error('Tenant id is not found')
     }  
-    if(!propertyId || !ratingNumber){
+    if(!propertyId || !rating){
          throw new Error('Property id and rating are required')
     }
 
@@ -30,7 +30,7 @@ const createReview = catchAsync(async(req:Request, res:Response, next:NextFuncti
   }
 
   
-  if(!Number.isInteger(ratingNumber) || ratingNumber < 1 || ratingNumber > 5){
+  if(!Number.isInteger(rating) || rating < 1 || rating > 5){
     throw new Error('Rating should be an integer and rating number must be between 1 and 5')
   }
 

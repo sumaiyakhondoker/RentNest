@@ -3,34 +3,42 @@ import { ICreatePropertyPayload} from "./landlord.interface"
 
 
 
-// const createPropertyIntoDB = async(landlordId:string,payload: ICreatePropertyPayload)=>{
+const createPropertyIntoDB = async(landlordId:string,payload: ICreatePropertyPayload)=>{
 
-//     const {title, location} = payload
-//     const isPropertyExist = await prisma.property.findFirst({
-//         where:{
-//             landlordId,
-//             title,
-//             location
-//         }
-//     })
+    const {title, location, categoryId} = payload
+    const isPropertyExist = await prisma.property.findFirst({
+        where:{
+            landlordId,
+            title,
+            location
+        }
+    })
 
-//     if(isPropertyExist){
-//         throw new Error("This property already exist. Please give a new property details.")
-//     }
+    if(isPropertyExist){
+        throw new Error("This property already exist. Please give a new property details.")
+    }
 
-//     const result = await prisma.property.create({
-//         data:{
+    const isCategoryExist = await prisma.category.findUnique({
+        where:{
+            id:categoryId
+        }
+    })
+if(!isCategoryExist){
+        throw new Error("This category id doesn't exist.")
+    }
+
+    
+    const result = await prisma.property.create({
+        data:{
             
-//             ...payload,
-//             landlordId
-//         }
+            ...payload,
+            landlordId
+        }
 
-//     })
+    })
 
-//     console.log(result);
-
-//     return result
-// }
+    return result
+}
 const updatePropertyIntoDB = async()=>{}
 const updatePropertyAvailabilityIntoDB = async()=>{}
 
@@ -63,7 +71,7 @@ const getAllRentalRequestsForLandlordFromDB = async()=>{}
 const updateRentalRequestStatusIntoDB = async()=>{}
 
 export const landlordServices = {
-// createPropertyIntoDB,
+createPropertyIntoDB,
 updatePropertyIntoDB,
 updatePropertyAvailabilityIntoDB,
 deletePropertyFromDB,

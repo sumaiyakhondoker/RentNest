@@ -25,14 +25,14 @@ const updateUserStatus = catchAsync(async(req:Request, res:Response, next:NextFu
     const {accountStatus} = req.body
 
     if(!userId){
-         throw new Error("User id is required")
+         throw new Error("User id is required in params.")
     }
 
     if(typeof userId !== 'string' || !uuidRegex.test(userId) ){
          throw new Error("User id must be a string and should be given in a valid format.")
     }
     if(!accountStatus || accountStatus === " "){
-        throw new Error("Account status is required and should be given a valid string")
+        throw new Error("Account status is required.")
     }
 
     if(typeof accountStatus !== 'string'){
