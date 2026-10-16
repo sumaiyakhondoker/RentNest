@@ -26,7 +26,15 @@ const createCategory =  catchAsync(async(req:Request, res:Response, next:NextFun
     data: result
     })
 })
-const getAllCategories =  catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
+const getAllCategories =  catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+    const {totalCategories,allCategoriesDetails} = await categoryServices.getAllCategoriesFromDB()
+     sendResponse(res, {
+        success: true,
+    statusCode:httpStatus.OK,
+    message: "All categories retrived successfully!!",
+    data: {totalCategories,allCategoriesDetails}
+    })
+})
 
 
 export const categoriesController = {

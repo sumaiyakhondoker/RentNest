@@ -21,7 +21,11 @@ const createCategoryintoDB =async(payload:ICategoryPayload)=>{
     })
     return createdCategory
 }
-const getAllCategoriesFromDB =async()=>{}
+const getAllCategoriesFromDB =async()=>{
+    const allCategoriesDetails = await prisma.category.findMany()
+    const totalCategories = allCategoriesDetails.length
+    return {totalCategories,allCategoriesDetails}
+}
 
 
 export const categoryServices = {

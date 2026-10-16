@@ -6,11 +6,12 @@ import { sendResponse } from "../../utils/sendResponse"
 
 const createProperty = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
         const payload = req.body
-        // const {} = 
+        const {title,description,picture,amenities,location,price,availability,categoryId} = payload
+        const landlordId = req.user?.id
 
         // validation implementation
-
-        const landlordId = req.user?.id
+// r user req body te jei field gula dibe oitar jonno ki ki validation add korbo 
+   
         const result = await landlordServices.createPropertyIntoDB(landlordId as string,payload)
         sendResponse(res, {
             success: true,

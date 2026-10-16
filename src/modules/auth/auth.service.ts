@@ -47,32 +47,33 @@ return user;
 const loginUserIntoDB = async(payload: ILoginUserPayload)=>{
     const {email, password} = payload
 
-    const user = await prisma.user.findUniqueOrThrow({
+    const loggedInUser = await prisma.user.findUniqueOrThrow({
         where:{email}
     })
 
-    if(user.accountStatus === 'BANNED'){
+    if(loggedInUser.accountStatus === 'BANNED'){
         throw new Error("Your account has been banned. Please contact to the support team")
     }
 
-    const isPasswordMatched = await bcrypt.compare(password, user.password)
+    const isPasswordMatched = await bcrypt.compare(password, loggedInUser.password)
 
     if(!isPasswordMatched){
         throw new Error("Invalid credentials!")
     }
 
     const jwtPayload = {
-        id:user.id,
-        name:user.name,
-        email:user.email,
-        role:user.role
+        id:loggedInUser.id,
+        name:loggedInUser.name,
+        email:loggedInUser.email,
+        role:loggedInUser.role
     }
 
     const accessToken = jwtUtils.createToken(jwtPayload, config.jwt_access_secret, config.jwt_access_expires_in as SignOptions)
 
     const refreshToken = jwtUtils.createToken(jwtPayload, config.jwt_refresh_secret, config.jwt_refresh_expires_in as SignOptions)
 
-    return {accessToken,refreshToken}
+    
+    return {accessToken,refreshToken, user:jwtPayload}
 }
 
 const getMyProfileFromDB = async(userId:string)=>{

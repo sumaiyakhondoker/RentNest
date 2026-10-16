@@ -105,7 +105,7 @@ if(typeof password !== "string"){
   })
 } 
 
-const {accessToken, refreshToken} = await authServices.loginUserIntoDB(payload)
+const {accessToken, refreshToken,user} = await authServices.loginUserIntoDB(payload)
 
 res.cookie("accessToken", accessToken, {
   httpOnly:true,
@@ -128,7 +128,8 @@ sendResponse(res, {
             message:'User logged in successfully!!',
             data:{
              accessToken,
-             refreshToken
+             refreshToken,
+             user
             }
 })
 
