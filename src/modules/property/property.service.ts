@@ -6,7 +6,16 @@ const getAllPropertiesFromDB = async()=>{
     const totalProperties = allProperties.length
     return {totalProperties, allProperties}
 }
-const getPropertyDetailsByIdFromDB = async()=>{}
+const getPropertyDetailsByIdFromDB = async(propertyId:string)=>{
+    const property = await prisma.property.findUniqueOrThrow({
+        where:{
+            id: propertyId
+
+        }
+    })
+
+    return property
+}
 export const propertyServices = {
     getAllPropertiesFromDB,
 getPropertyDetailsByIdFromDB
