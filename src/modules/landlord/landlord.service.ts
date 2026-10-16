@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma"
-import { ICreatePropertyPayload} from "./landlord.interface"
+import { ICreatePropertyPayload, IUpdatePropertyPayload} from "./landlord.interface"
 
 
 
@@ -39,8 +39,40 @@ if(!isCategoryExist){
 
     return result
 }
-const updatePropertyIntoDB = async()=>{}
-const updatePropertyAvailabilityIntoDB = async()=>{}
+const updatePropertyIntoDB = async(payload:IUpdatePropertyPayload, propertyId:string, landlordId:string)=>{
+    const property = await prisma.property.findUnique({
+        where:{
+            id: propertyId
+
+        }
+    })
+
+    
+    if(!property){
+        throw new Error("Property doesn't exist.")
+
+    }
+
+    
+     if(property?.landlordId !== landlordId){
+        throw new Error("You can't update this property details because you are not the landlord of that property.")
+    }
+
+ 
+
+    const result  = await prisma.property.update({
+        where:{
+            id:propertyId
+        },
+        data:{
+            ...payload
+        }
+    })
+
+    return result
+
+}
+
 
 const deletePropertyFromDB = async(propertyId:string, landlordId:string)=>{
     const property = await prisma.property.findUnique({
@@ -56,7 +88,7 @@ const deletePropertyFromDB = async(propertyId:string, landlordId:string)=>{
 
     }
 
-    console.log('from prev',landlordId, 'from property',property.landlordId);
+    
      if(property?.landlordId !== landlordId){
         throw new Error("You are not the landlord of that property. So you can't delete that property details.")
     }
@@ -73,7 +105,6 @@ const updateRentalRequestStatusIntoDB = async()=>{}
 export const landlordServices = {
 createPropertyIntoDB,
 updatePropertyIntoDB,
-updatePropertyAvailabilityIntoDB,
 deletePropertyFromDB,
 getAllRentalRequestsForLandlordFromDB,
 updateRentalRequestStatusIntoDB

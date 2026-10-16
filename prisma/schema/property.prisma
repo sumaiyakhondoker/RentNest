@@ -7,7 +7,7 @@ id              String @id @default(uuid())
 title           String
 description     String
 picture String?
-amenities String[]
+amenities String[] 
 location        String
 price           Int 
 availability    PropertyAvailability @default(AVAILABLE)

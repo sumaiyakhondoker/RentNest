@@ -59,8 +59,83 @@ const createProperty = catchAsync(async(req:Request, res:Response, next:NextFunc
         })
 
 })
-const updateProperty = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
-const updatePropertyAvailability = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
+const updateProperty = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+    const propertyId = req.params.id
+    const payload = req.body
+       const {title,description,picture,amenities,location,price,availability,categoryId} = payload
+        
+      const uuidRegex =  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
+        const landlordId = req.user?.id
+
+        if(!landlordId){
+            throw new Error('Landlord id is required')
+        }
+
+   
+        if(!propertyId){
+            throw new Error('Property id is required in params')
+    }
+
+      if(typeof propertyId !== 'string' || !uuidRegex.test(propertyId)){
+    throw new Error('Property id must be a string and should be given in a valid format')
+  }
+
+   
+
+        if(title && (typeof title !== 'string' || title.trim().length === 0)){
+             throw new Error("Property title  must be a valid string.")
+
+        }
+
+        
+
+        if(description && (typeof description !== 'string'  ||   description.trim().length === 0) ){
+             throw new Error("Property description  must be a valid string.")
+
+        }
+
+        if(location && (typeof location !== 'string'  || location.trim().length === 0)){
+             throw new Error("Property location  must be a valid string.")
+
+        }
+
+        if(picture && (typeof picture !== 'string' || picture.trim().length === 0)){
+             throw new Error("Picture url must be a valid string.")
+
+        }
+
+        if(amenities && amenities.length > 0 && (!Array.isArray(amenities) || amenities.length === 0 || !amenities.every((item)=>typeof item === 'string' && item.trim().length > 0))){
+            throw new Error("Amenities must be an array of valid strings.")
+        }
+
+        if(price && (!Number.isInteger(price) ||  price < 0 ) ){
+             throw new Error("Price must be an integer and greater than 0")
+
+        }
+
+        if(availability && availability  !==  PropertyAvailability.AVAILABLE && availability !== PropertyAvailability.RENTED){
+                 throw new Error("Property availability  must be either 'AVAILABLE' or 'RENTED'.")
+            }
+
+          
+    
+          if(categoryId && (typeof categoryId !== 'string'|| !uuidRegex.test(categoryId))){
+    throw new Error('Please give a valid category id and it must be a string')
+  }
+
+    
+  const updatedPropertyDetails = await landlordServices.updatePropertyIntoDB(payload, propertyId,landlordId)
+
+  sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message:'Property details updated successfully!!',
+            data: updatedPropertyDetails
+  })
+
+
+})
 
 const deleteProperty = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
     const propertyId = req.params.id
@@ -88,6 +163,8 @@ const deleteProperty = catchAsync(async(req:Request, res:Response, next:NextFunc
     })
 
 })
+
+
 const getAllRentalRequestsForLandlord = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
 const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
 
@@ -95,7 +172,6 @@ const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, ne
 export const landlordController = {
     createProperty,
 updateProperty,
-updatePropertyAvailability,
 deleteProperty,
 getAllRentalRequestsForLandlord,
 updateRentalRequestStatus
