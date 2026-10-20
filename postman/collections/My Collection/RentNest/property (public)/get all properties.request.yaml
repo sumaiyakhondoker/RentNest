@@ -1,4 +1,7 @@
 $kind: http-request
-url: ""
+url: http://localhost:5000/api/properties
 method: GET
+body:
+  type: json
+  content: ""
 order: 1000

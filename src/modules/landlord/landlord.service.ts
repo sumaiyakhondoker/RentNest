@@ -10,6 +10,7 @@ const createPropertyIntoDB = async(landlordId:string,payload: ICreatePropertyPay
         where:{
             landlordId,
             title,
+            categoryId,
             location
         }
     })
@@ -101,20 +102,16 @@ const deletePropertyFromDB = async(propertyId:string, landlordId:string)=>{
 }
 const getAllRentalRequestsForLandlordFromDB = async(landlordId:string)=>{
 
-    const allPropertiesOfLandlord = await prisma.property.findMany({
+    const allRentalRequests = await prisma.rentalRequest.findMany({
         where:{
-            landlordId
+            property:{
+               landlordId
+            }
         }
     })
 
-    if(!allPropertiesOfLandlord){
-        throw new Error('No property found of that landlord.')
-    }
-
-    const allRentalRequests = []
-    allPropertiesOfLandlord.map((property)=>{
-        
-    })
+    const totalRentalRequests = allRentalRequests.length
+    return {totalRentalRequests,allRentalRequests}
 
 
 

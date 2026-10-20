@@ -46,14 +46,11 @@ const createRentalRequestIntoDB = async(payload:IRentalRequestPayload)=>{
     const allRentalRequests = await prisma.rentalRequest.findMany({
         where:{
            tenantId
-        },
-        include:{
-            property:true
         }
     })
 
-
-    return allRentalRequests
+const totalRentalRequests = allRentalRequests.length
+    return {totalRentalRequests,allRentalRequests}
 }
 
 const getRentalRequestByIdFromDB = async(rentalRequestId:string)=>{

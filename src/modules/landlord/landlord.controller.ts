@@ -171,16 +171,18 @@ const getAllRentalRequestsForLandlord = catchAsync(async(req:Request, res:Respon
            throw new Error('Landlord id not found')
      }
 
-     const {totalRentalRequests, allRentalRequests} = await landlordServices.getAllRentalRequestsForLandlordFromDB(landlordId)
+     const {totalRentalRequests,allRentalRequests} = await landlordServices.getAllRentalRequestsForLandlordFromDB(landlordId)
      sendResponse(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message:'Property details updated successfully!!',
+            message: "Rental requests for your properties retrieved successfully.",
             data: {totalRentalRequests,allRentalRequests}
   })
 
 })
-const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
+const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+     // const 
+})
 
 
 export const landlordController = {

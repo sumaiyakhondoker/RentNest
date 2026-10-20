@@ -65,12 +65,15 @@ const { propertyId,
 
 const getAllRentalRequest = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
   const tenantId = req.user?.id
-  const result = await rentalRequestServices.getAllRentalRequestFromDB(tenantId as string)
+  if(!tenantId){
+    throw new Error('Tenant id not found')
+  }
+  const {totalRentalRequests,allRentalRequests} = await rentalRequestServices.getAllRentalRequestFromDB(tenantId as string)
   sendResponse(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message:'All rental requests retrived successfully!!',
-            data: result
+            message:'All rental requests for that tenant retrived successfully!!',
+            data: {totalRentalRequests,allRentalRequests}
   })
 })
 

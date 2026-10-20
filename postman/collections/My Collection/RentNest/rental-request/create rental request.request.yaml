@@ -1,4 +1,15 @@
 $kind: http-request
-url: ""
-method: GET
+url: http://localhost:5000/api/rentals
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"propertyId\": \"06bb78a1-2bc4-44c7-b3c2-53e2b1a3a7a7\",\r
+
+    \  \"moveInDate\": \"2026-11-05T00:00:00.000Z\",\r
+
+    \  \"message\": \"I am a student looking for an affordable room near my university.\"\r
+
+    }"
 order: 1000

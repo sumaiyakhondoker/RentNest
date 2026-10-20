@@ -1,4 +1,23 @@
 $kind: http-request
-url: ""
-method: GET
+url: http://localhost:5000/api/landlord/properties
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"title\": \"Affordable Student Living Room\",\r
+
+    \  \"description\": \"A budget-friendly furnished room with essential facilities, suitable for university students and interns.\",\r
+
+    \  \"picture\": \"https://example.com/student-room.jpg\",\r
+
+    \  \"amenities\": [\"Bed\", \"Study Table\", \"WiFi\", \"Fan\"],\r
+
+    \  \"location\": \"Nilkhet\",\r
+
+    \  \"price\": 6500,\r
+
+    \  \"categoryId\": \"4fc081be-069b-472e-a469-25f898e9abf7\"\r
+
+    }"
 order: 1000
