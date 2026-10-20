@@ -11,6 +11,9 @@ const getPropertyDetailsByIdFromDB = async(propertyId:string)=>{
         where:{
             id: propertyId
 
+        },
+        include:{
+            reviews:true
         }
     })
 

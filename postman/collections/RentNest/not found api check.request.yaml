@@ -1,0 +1,5 @@
+$kind: http-request
+url: localhost:5000/api/auth/logins
+method: POST
+settings: {}
+order: 10000

@@ -1,0 +1,8 @@
+$kind: http-request
+url: localhost:5000/api/admin/users/7a99794e-0e72-47ca-81c0-a626d907ff8c
+method: PATCH
+body:
+  type: json
+  content: "{\r\n    \"status\" : \"ACTIVE\"\r\n}"
+settings: {}
+order: 2000

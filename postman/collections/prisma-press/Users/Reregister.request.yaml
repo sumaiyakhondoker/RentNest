@@ -1,0 +1,18 @@
+$kind: http-request
+url: http://localhost:5000/api/users/register
+method: POST
+body:
+  type: json
+  content: "{   \r
+
+    \    \"name\": \"Rufaida\",\r
+
+    \    \"email\": \"abc7@gmail.com\",\r
+
+    \    \"password\":\"123456\",\r
+
+    \    \"profilePhoto\": \"www.google.com\"\r
+
+    }"
+settings: {}
+order: 1000

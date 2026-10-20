@@ -99,7 +99,28 @@ const deletePropertyFromDB = async(propertyId:string, landlordId:string)=>{
         }
     })
 }
-const getAllRentalRequestsForLandlordFromDB = async()=>{}
+const getAllRentalRequestsForLandlordFromDB = async(landlordId:string)=>{
+
+    const allPropertiesOfLandlord = await prisma.property.findMany({
+        where:{
+            landlordId
+        }
+    })
+
+    if(!allPropertiesOfLandlord){
+        throw new Error('No property found of that landlord.')
+    }
+
+    const allRentalRequests = []
+    allPropertiesOfLandlord.map((property)=>{
+        
+    })
+
+
+
+
+
+}
 const updateRentalRequestStatusIntoDB = async()=>{}
 
 export const landlordServices = {

@@ -1,0 +1,11 @@
+$kind: http-request
+url: http://localhost:5000/api/posts/28c5b84f-e977-46cd-91e9-bbab0e610e58
+method: PATCH
+body:
+  type: json
+  content: "{\r
+
+    \"title\": \"My third Post and updated by admin\"\r
+
+    }"
+order: 5000

@@ -1,0 +1,5 @@
+$kind: http-request
+url: localhost:5000/api/admin/properties
+method: GET
+settings: {}
+order: 3000

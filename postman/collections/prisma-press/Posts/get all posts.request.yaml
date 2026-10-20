@@ -1,0 +1,12 @@
+$kind: http-request
+url: http://localhost:5000/api/posts?title=crystian ronaldo&content=ronaldo&searchTerm=ron&limit=1&page=2&sortBy=createdAt&sortOrder=desc
+method: GET
+queryParams:
+  title: crystian ronaldo
+  content: ronaldo
+  searchTerm: ron
+  limit: "1"
+  page: "2"
+  sortBy: createdAt
+  sortOrder: desc
+order: 2000

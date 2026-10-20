@@ -165,7 +165,21 @@ const deleteProperty = catchAsync(async(req:Request, res:Response, next:NextFunc
 })
 
 
-const getAllRentalRequestsForLandlord = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
+const getAllRentalRequestsForLandlord = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+     const landlordId = req.user?.id
+     if(!landlordId){
+           throw new Error('Landlord id not found')
+     }
+
+     const {totalRentalRequests, allRentalRequests} = await landlordServices.getAllRentalRequestsForLandlordFromDB(landlordId)
+     sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message:'Property details updated successfully!!',
+            data: {totalRentalRequests,allRentalRequests}
+  })
+
+})
 const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
 
 

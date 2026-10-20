@@ -1,0 +1,22 @@
+$kind: http-request
+url: localhost:5000/api/auth/register
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"name\": \"Mr. Jakir\",\r
+
+    \    \"email\": \"mr@jakir.com\",\r
+
+    \    \"password\": \"abc123\",\r
+
+    \    \"description\": \"Property owner in Khulna\",\r
+
+    \    \"role\": \"LANDLORD\",\r
+
+    \    \"accountStatus\": \"ACTIVE\"\r
+
+    }"
+settings: {}
+order: 1000

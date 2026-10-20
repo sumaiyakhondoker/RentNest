@@ -1,0 +1,5 @@
+$kind: http-request
+url: localhost:5000/api/properties/1d64f981-b5cf-4c2c-b8f4-1820c3bbb97c
+method: GET
+settings: {}
+order: 1000

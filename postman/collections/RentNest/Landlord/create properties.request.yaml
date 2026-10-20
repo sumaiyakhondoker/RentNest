@@ -1,0 +1,24 @@
+$kind: http-request
+url: localhost:5000/api/landlord/properties
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"propertyName\": \"Single Bedroom Flat\",\r
+
+    \  \"description\": \"Comfortable one-bedroom flat ideal for a single tenant or couple.\",\r
+
+    \  \"location\": \"Khulna\",\r
+
+    \  \"amenities\": [\"WiFi\", \"Gas\", \"Lift\"],\r
+
+    \  \"price\": 8500,\r
+
+    \  \"status\": \"AVAILABLE\",\r
+
+    \  \"categoryId\": \"e8549ac0-719b-4ac9-9e3b-65763c409d44\"\r
+
+    }"
+settings: {}
+order: 1000

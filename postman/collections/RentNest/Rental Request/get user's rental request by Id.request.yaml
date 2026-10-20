@@ -1,0 +1,5 @@
+$kind: http-request
+url: localhost:5000/api/rentals/53cae08b-a02b-43d2-a816-767b880b02f5
+method: GET
+settings: {}
+order: 3000

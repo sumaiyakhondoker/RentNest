@@ -1,0 +1,42 @@
+$kind: http-request
+url: localhost:5000/api/properties/
+method: GET
+queryParams:
+  - key: searchTerm
+    value: apartment
+    disabled: true
+  - key: propertyName
+    value: Single Bedroom Flat
+    disabled: true
+  - key: location
+    value: Dhaka
+    disabled: true
+  - key: limit
+    value: "4"
+    disabled: true
+  - key: page
+    value: "2"
+    disabled: true
+  - key: sortOrder
+    value: desc
+    disabled: true
+  - key: amenities
+    value: '["Gas"]'
+    disabled: true
+  - key: category
+    value: Bachelor
+    disabled: true
+  - key: minPrice
+    value: "8000"
+    disabled: true
+  - key: maxPrice
+    value: "50000"
+    disabled: true
+  - key: price
+    value: "8500"
+    disabled: true
+  - key: status
+    value: AVAILABLE
+    disabled: true
+settings: {}
+order: 2000
