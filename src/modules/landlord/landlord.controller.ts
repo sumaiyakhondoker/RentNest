@@ -180,9 +180,38 @@ const getAllRentalRequestsForLandlord = catchAsync(async(req:Request, res:Respon
   })
 
 })
-const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-     // const 
-})
+// const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+//      const rentalRequestId = req.params.id
+//      const landlordId = req.user?.id
+//      const {status} = req.body
+//      const uuidRegex =  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
+
+//      if(!landlordId){
+//           throw new Error('Landlord id not found.')
+
+//      } 
+//      if(!rentalRequestId){
+//           throw new Error('Rental request id is required in params.')
+
+//      }      
+//      if(typeof rentalRequestId !== 'string' || !uuidRegex.test(rentalRequestId)){
+//     throw new Error('Please give a valid rental request id and it must be a string')
+
+//      }
+
+          
+     
+
+//      const updatedRentalRequestDetails = await landlordServices.updateRentalRequestStatusIntoDB(landlordId,rentalRequestId, status)
+
+//  sendResponse(res, {
+//             success: true,
+//             statusCode: httpStatus.OK,
+//             message:'Rental request status updated successfully!!',
+//             data: {updatedRentalRequestDetails}
+//   })
+// })
 
 
 export const landlordController = {
@@ -190,5 +219,5 @@ export const landlordController = {
 updateProperty,
 deleteProperty,
 getAllRentalRequestsForLandlord,
-updateRentalRequestStatus
+// updateRentalRequestStatus
 }

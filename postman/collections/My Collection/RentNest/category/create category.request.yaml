@@ -1,4 +1,13 @@
 $kind: http-request
-url: ""
-method: GET
+url: http://localhost:5000/api/categories
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"categoryName\": \"Other\",\r
+
+    \  \"description\": \"Other types of properties that do not belong to any existing category.\"\r
+
+    }"
 order: 1000

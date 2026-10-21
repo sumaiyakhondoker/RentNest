@@ -1,10 +1,12 @@
 import { prisma } from "../../lib/prisma"
 import { IReviewPayload } from "./review.interface"
 
-const createReviewIntoDB = async(payload:IReviewPayload, tenantId:string)=>{
+
+const createReviewIntoDB = async(payload:IReviewPayload)=>{
+    // const Payload
     const createdReview = await prisma.review.create({
     data:{
-         tenantId,
+        
         ...payload
         
     }

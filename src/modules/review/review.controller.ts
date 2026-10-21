@@ -10,9 +10,9 @@ const createReview = catchAsync(async(req:Request, res:Response, next:NextFuncti
 
     const tenantId = req.user?.id
 
-    const payload = req.body
+    
 
-    const {propertyId, rating, comment} = payload
+    const {propertyId, rating, comment} = req.body
     
 
       const uuidRegex =  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
@@ -38,7 +38,11 @@ const createReview = catchAsync(async(req:Request, res:Response, next:NextFuncti
      throw new Error('Comment must be a string')
   }
 
-  const result = await reviewServices.createReviewIntoDB(payload, tenantId)
+  const reviewPayload = {
+    propertyId, rating, comment,tenantId
+
+  } 
+  const result = await reviewServices.createReviewIntoDB(reviewPayload)
 
   sendResponse(res, {
             success: true,
