@@ -121,41 +121,40 @@ const getAllRentalRequestsForLandlordFromDB = async(landlordId:string)=>{
 }
 
 
-// const updateRentalRequestStatusIntoDB = async(landlordId:string, rentalRequestId:string, rentalRequestStatus:RentalRequestStatus)=>{
+const updateRentalRequestStatusIntoDB = async(landlordId:string, rentalRequestId:string, rentalRequestStatus:RentalRequestStatus)=>{
 
-//     const isRentalRequestExist = await prisma.rentalRequest.findFirst({
-//         where:{
-//             // AND:{
-//             id:rentalRequestId,
-//             property:{
-//                 landlordId
-//             }
-//             // }
-//         }
-//     })
+    const isRentalRequestExist = await prisma.rentalRequest.findFirst({
+        where:{
+            id:rentalRequestId,
+            property:{
+                landlordId
+            }
+           
+        }
+    })
 
-//     if(!isRentalRequestExist){
-//           throw new Error('This rental request does not exist.')
+    if(!isRentalRequestExist){
+          throw new Error('This rental request does not exist in your property.')
 
-//     }
+    }
 
-//     const result = await prisma.rentalRequest.update({
-//         where:{
-//             id:rentalRequestId
-//         },
-//         data:{
-//             status: rentalRequestStatus
-//         }
+    const result = await prisma.rentalRequest.update({
+        where:{
+            id:rentalRequestId
+        },
+        data:{
+            status: rentalRequestStatus
+        }
 
-//     })
+    })
 
-//     return result
-// }
+    return result
+}
 
 export const landlordServices = {
 createPropertyIntoDB,
 updatePropertyIntoDB,
 deletePropertyFromDB,
 getAllRentalRequestsForLandlordFromDB,
-// updateRentalRequestStatusIntoDB
+updateRentalRequestStatusIntoDB
 }

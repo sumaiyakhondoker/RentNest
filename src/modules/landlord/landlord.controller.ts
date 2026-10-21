@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express"
 import { catchAsync } from "../../utils/catchAsync"
 import { landlordServices } from "./landlord.service"
 import { sendResponse } from "../../utils/sendResponse"
-import { PropertyAvailability } from '../../../generated/prisma/enums';
+import { PropertyAvailability, RentalRequestStatus } from '../../../generated/prisma/enums';
 
 const createProperty = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
         const payload = req.body
@@ -180,38 +180,42 @@ const getAllRentalRequestsForLandlord = catchAsync(async(req:Request, res:Respon
   })
 
 })
-// const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-//      const rentalRequestId = req.params.id
-//      const landlordId = req.user?.id
-//      const {status} = req.body
-//      const uuidRegex =  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+     const rentalRequestId = req.params.id
+     const landlordId = req.user?.id
+     const {status} = req.body
+     const uuidRegex =  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
 
-//      if(!landlordId){
-//           throw new Error('Landlord id not found.')
+     if(!landlordId){
+          throw new Error('Landlord id not found.')
 
-//      } 
-//      if(!rentalRequestId){
-//           throw new Error('Rental request id is required in params.')
+     } 
+     if(!rentalRequestId){
+          throw new Error('Rental request id is required in params.')
 
-//      }      
-//      if(typeof rentalRequestId !== 'string' || !uuidRegex.test(rentalRequestId)){
-//     throw new Error('Please give a valid rental request id and it must be a string')
+     }      
+     if(typeof rentalRequestId !== 'string' || !uuidRegex.test(rentalRequestId)){
+    throw new Error('Please give a valid rental request id and it must be a string')
+     }
 
-//      }
+     if(status !== RentalRequestStatus.PENDING && status !== RentalRequestStatus.APPROVED && status !== RentalRequestStatus.REJECTED && status !== RentalRequestStatus.COMPLETED){
+    throw new Error('Please give a valid rental request status.')
+
+     }
 
           
      
 
-//      const updatedRentalRequestDetails = await landlordServices.updateRentalRequestStatusIntoDB(landlordId,rentalRequestId, status)
+     const updatedRentalRequestDetails = await landlordServices.updateRentalRequestStatusIntoDB(landlordId,rentalRequestId, status)
 
-//  sendResponse(res, {
-//             success: true,
-//             statusCode: httpStatus.OK,
-//             message:'Rental request status updated successfully!!',
-//             data: {updatedRentalRequestDetails}
-//   })
-// })
+ sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message:'Rental request status updated successfully!!',
+            data: {updatedRentalRequestDetails}
+  })
+})
 
 
 export const landlordController = {
@@ -219,5 +223,5 @@ export const landlordController = {
 updateProperty,
 deleteProperty,
 getAllRentalRequestsForLandlord,
-// updateRentalRequestStatus
+updateRentalRequestStatus
 }

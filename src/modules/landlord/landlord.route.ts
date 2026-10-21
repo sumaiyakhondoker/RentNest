@@ -12,7 +12,7 @@ router.delete('/properties/:id',auth(Role.LANDLORD), landlordController.deletePr
 router.get('/requests',auth(Role.LANDLORD), landlordController.getAllRentalRequestsForLandlord)
 
 
-// router.patch('/requests/:id',auth(Role.LANDLORD), landlordController.updateRentalRequestStatus)
+router.patch('/requests/:id',auth(Role.LANDLORD), landlordController.updateRentalRequestStatus)
 
 
 export const landlordRoutes =  router

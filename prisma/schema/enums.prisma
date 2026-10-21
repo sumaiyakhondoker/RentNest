@@ -19,7 +19,6 @@ enum RentalRequestStatus {
     PENDING
     APPROVED
     REJECTED
-    ACTIVE
     COMPLETED
 
 }
