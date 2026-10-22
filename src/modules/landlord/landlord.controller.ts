@@ -51,7 +51,7 @@ const createProperty = catchAsync(async(req:Request, res:Response, next:NextFunc
         const result = await landlordServices.createPropertyIntoDB(landlordId as string,payload)
         sendResponse(res, {
             success: true,
-            statusCode: httpStatus.OK,
+            statusCode: httpStatus.CREATED,
             message:'Property details created successfully!!',
             data: result 
 
@@ -199,13 +199,11 @@ const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, ne
     throw new Error('Please give a valid rental request id and it must be a string')
      }
 
-     if(status !== RentalRequestStatus.PENDING && status !== RentalRequestStatus.APPROVED && status !== RentalRequestStatus.REJECTED && status !== RentalRequestStatus.COMPLETED){
-    throw new Error('Please give a valid rental request status.')
+     if(status !== RentalRequestStatus.APPROVED && status !== RentalRequestStatus.REJECTED){
+    throw new Error("Rental request status must be either 'APPROVED' or 'REJECTED'.")
 
      }
 
-          
-     
 
      const updatedRentalRequestDetails = await landlordServices.updateRentalRequestStatusIntoDB(landlordId,rentalRequestId, status)
 

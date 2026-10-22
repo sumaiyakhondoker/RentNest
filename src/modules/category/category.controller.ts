@@ -21,7 +21,7 @@ const createCategory =  catchAsync(async(req:Request, res:Response, next:NextFun
     const result = await categoryServices.createCategoryintoDB(payload)
     sendResponse(res, {
         success: true,
-    statusCode:httpStatus.OK,
+    statusCode:httpStatus.CREATED,
     message: "New category created successfully!!",
     data: result
     })

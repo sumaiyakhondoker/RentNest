@@ -1,7 +1,7 @@
 $kind: http-request
-url: http://localhost:5000/api/landlord/requests/9a2ad16b-bddb-4597-844d-1b700d480614
+url: http://localhost:5000/api/landlord/requests/0f6d8a58-28bc-4fd2-b870-67a4e4da5b7a
 method: PATCH
 body:
   type: json
-  content: "{\r\n    \"status\":\"REJECTED\"\r\n}"
+  content: "{\r\n    \"status\":\"APPROVED\"\r\n}"
 order: 5000

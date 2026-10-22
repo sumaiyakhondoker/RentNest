@@ -134,7 +134,12 @@ const updateRentalRequestStatusIntoDB = async(landlordId:string, rentalRequestId
     })
 
     if(!isRentalRequestExist){
-          throw new Error('This rental request does not exist in your property.')
+          throw new Error('This rental request does not exist in your properties.')
+
+    }
+
+    if(isRentalRequestExist.status !== RentalRequestStatus.PENDING){
+          throw new Error('Only pending rental requests can be approved or rejected.')
 
     }
 

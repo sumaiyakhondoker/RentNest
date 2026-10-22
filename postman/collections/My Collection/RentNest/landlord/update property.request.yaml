@@ -1,4 +1,4 @@
 $kind: http-request
-url: ""
-method: GET
+url: http://localhost:5000/api/landlord/requests/9a2ad16b-bddb-4597-844d-1b700d480614
+method: PATCH
 order: 3000

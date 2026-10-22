@@ -54,7 +54,7 @@ const { propertyId,
   const result = await rentalRequestServices.createRentalRequestIntoDB(rentalRequestData)
   sendResponse(res, {
             success: true,
-            statusCode: httpStatus.OK,
+            statusCode: httpStatus.CREATED,
             message:'Rental request created successfully!!',
             data: result
   })
@@ -63,7 +63,7 @@ const { propertyId,
 
 })
 
-const getAllRentalRequest = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+const getAllRentalRequests = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
   const tenantId = req.user?.id
   if(!tenantId){
     throw new Error('Tenant id not found')
@@ -72,7 +72,7 @@ const getAllRentalRequest = catchAsync(async(req:Request, res:Response, next:Nex
   sendResponse(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message:'All rental requests for that tenant retrived successfully!!',
+            message:"All rental requests for the tenant were retrieved successfully!",
             data: {totalRentalRequests,allRentalRequests}
   })
 })
@@ -101,7 +101,7 @@ throw new Error('Rental request id must be a string and should be given in a val
 
 export const rentalRequestController = {
     createRentalRequest,
-getAllRentalRequest,
+getAllRentalRequests,
 getRentalRequestById
 
 }

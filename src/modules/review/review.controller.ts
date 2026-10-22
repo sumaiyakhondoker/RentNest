@@ -46,7 +46,7 @@ const createReview = catchAsync(async(req:Request, res:Response, next:NextFuncti
 
   sendResponse(res, {
             success: true,
-            statusCode: httpStatus.OK,
+            statusCode: httpStatus.CREATED,
             message:'Review created successfully!!',
             data: result
   })

@@ -1,4 +1,4 @@
 $kind: http-request
-url: http://localhost:5000/api/properties/43eb313f-8b05-48a1-9590-06c7038e9f0e
+url: http://localhost:5000/api/properties/3557298c-83f4-4fc4-b2e1-44704cbc9381
 method: GET
 order: 2000
