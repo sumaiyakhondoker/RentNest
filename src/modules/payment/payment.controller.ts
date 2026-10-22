@@ -35,6 +35,25 @@ const tenantId = req.user?.id
 
 })
 
+
+const confirmPayment =  catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+        const signature = req.headers["stripe-signature"];
+
+        if (!signature || Array.isArray(signature)) {
+           throw new Error("Missing or invalid Stripe signature.")
+        }
+
+        const result = await paymentServices.handleStripeWebhookIntoDB(req.body as Buffer,signature);
+
+        sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "Stripe webhook received successfully!!",
+            data: result,
+        });
+    })
+
 export const paymentController = {
-    createPayment
+    createPayment,
+    confirmPayment
 }

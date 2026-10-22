@@ -6,7 +6,7 @@ const router = Router()
 
 
 router.post('/create', auth(Role.TENANT), paymentController.createPayment)
-// router.post('/confirm', paymentController.confirmPayment)
+router.post('/confirm', paymentController.confirmPayment)
 
 // router.get('/', auth(Role.TENANT),  paymentController.getMyPayments)
 // router.get('/:id',auth(Role.TENANT),  paymentController.getPaymentById)

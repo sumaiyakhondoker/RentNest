@@ -105,7 +105,87 @@ return {
 
 }
 
+
+const handleStripeWebhookIntoDB = async (payload: Buffer,signature: string) => {
+    const event = stripe.webhooks.constructEvent(
+        payload,
+        signature,
+        config.stripe_webhook_secret
+    );
+
+    if (event.type !== "checkout.session.completed") {
+        return { received: true };
+    }
+
+    const session = event.data.object;
+
+    if (session.payment_status !== "paid") {
+        return { received: true };
+    }
+
+    const paymentId = session.metadata?.paymentId;
+    const rentalRequestId = session.metadata?.rentalRequestId;
+
+console.log("Stripe session metadata:", session.metadata);
+
+    if (!paymentId || !rentalRequestId) {
+        throw new Error("Payment metadata is missing.");
+    }
+
+    await prisma.$transaction(async (tx) => {
+        const payment = await tx.payment.findUnique({
+            where: { id: paymentId },
+        });
+
+        if (!payment) {
+            throw new Error("Payment record not found.");
+        }
+
+        if (payment.rentalRequestId !== rentalRequestId) {
+            throw new Error("Payment rental request mismatch.");
+        }
+
+        if (payment.status === PaymentStatus.COMPLETED) {
+            return;
+        }
+
+        const rentalRequest = await tx.rentalRequest.findUnique({
+            where: { id: rentalRequestId },
+        });
+
+        if (!rentalRequest) {
+            throw new Error("Rental request not found.");
+        }
+
+        if (rentalRequest.status !== RentalRequestStatus.APPROVED) {
+            throw new Error("Rental request is not approved.");
+        }
+
+        await tx.payment.update({
+            where: { id: paymentId },
+            data: {
+                status: PaymentStatus.COMPLETED,
+                paidAt: new Date(),
+                transactionId: session.id,
+            },
+        });
+
+        await tx.rentalRequest.update({
+            where: { id: rentalRequestId },
+            data: { status: RentalRequestStatus.ACTIVE },
+        });
+    },
+     {
+        maxWait: 10000,
+        timeout: 20000,
+    }
+
+);
+
+    return { received: true };
+};
 export const paymentServices = {
-    createPaymentIntoDB 
+    createPaymentIntoDB,
+    handleStripeWebhookIntoDB 
 }
 
