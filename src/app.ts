@@ -1,7 +1,8 @@
+import  httpStatus  from 'http-status';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import express,{ Application, Request, Response } from "express";
+import express,{ Application, NextFunction, Request, Response } from "express";
 import config from "./config";
 import { landlordRoutes} from "./modules/landlord/landlord.route";
 import { authRoutes } from "./modules/auth/auth.route";
@@ -11,6 +12,7 @@ import { adminRoutes } from "./modules/admin/admin.route";
 import { propertyRoutes } from "./modules/property/property.route";
 import { paymentRoutes } from "./modules/payment/payment.route";
 import { notFound } from "./middleware/notFound";
+import { globalErrorHandler } from './middleware/globalErrorHandler';
 
 const app:Application = express()
 
@@ -42,7 +44,7 @@ app.use('/api/admin', adminRoutes)
 
 
 app.use(notFound)
-
+app.use(globalErrorHandler)
 
 
 

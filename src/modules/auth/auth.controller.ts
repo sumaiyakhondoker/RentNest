@@ -4,8 +4,6 @@ import httpStatus from "http-status"
 import { authServices } from "./auth.service"
 import { catchAsync } from "../../utils/catchAsync"
 import { sendResponse } from "../../utils/sendResponse"
-import { jwtUtils } from "../../utils/jwt"
-import config from "../../config"
 
 
 
@@ -19,7 +17,7 @@ const {name,email, password} = payload
 if(!name || !email || !password){
     return sendResponse(res, {
         success:false,
-        statusCode:httpStatus.BAD_REQUEST,
+         statusCode:httpStatus.BAD_REQUEST,
          message:'Name, email and password fields are required',
          errorDetails: null
 
