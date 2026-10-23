@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:5000/api/payments/aa730672-d33d-4565-b068-75c32b747688
+method: GET
+order: 3000

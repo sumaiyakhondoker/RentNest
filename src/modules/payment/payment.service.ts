@@ -22,11 +22,6 @@ const createPaymentIntoDB = async(tenantId:string, rentalRequestId: string)=>{
         throw new Error("You are not authorized to create a payment for this rental request.")
     }
 
-    if(rentalRequest.status !== RentalRequestStatus.APPROVED){
-        throw new Error("Payment can only be initiated for approved rental requests.")
-
-    }
-
 
     const amount = rentalRequest.property.price
 
@@ -38,6 +33,11 @@ const createPaymentIntoDB = async(tenantId:string, rentalRequestId: string)=>{
 
     if(isPaymentExist){
         throw new Error("A payment record already exists for this rental request.")
+    }
+
+       if(rentalRequest.status !== RentalRequestStatus.APPROVED){
+        throw new Error("Payment can only be initiated for approved rental requests.")
+
     }
     const createdPayment = await prisma.payment.create({
         data:{
@@ -126,11 +126,14 @@ const handleStripeWebhookIntoDB = async (payload: Buffer,signature: string) => {
     const paymentId = session.metadata?.paymentId;
     const rentalRequestId = session.metadata?.rentalRequestId;
 
-console.log("Stripe session metadata:", session.metadata);
 
     if (!paymentId || !rentalRequestId) {
         throw new Error("Payment metadata is missing.");
     }
+
+
+   
+
 
     await prisma.$transaction(async (tx) => {
         const payment = await tx.payment.findUnique({
@@ -161,7 +164,6 @@ console.log("Stripe session metadata:", session.metadata);
             throw new Error("Rental request is not approved.");
         }
 
-        console.log('hitted befor update');
 
         await tx.payment.update({
             where: { id: paymentId },
@@ -189,7 +191,7 @@ console.log("Stripe session metadata:", session.metadata);
 
 
 const getMyPaymentsFromDB = async(tenantId:string)=>{
-    const result = await prisma.payment.findMany({
+    const allPayments = await prisma.payment.findMany({
         where:{
             rentalRequest:{
                 tenantId
@@ -200,9 +202,25 @@ const getMyPaymentsFromDB = async(tenantId:string)=>{
         }
     })
 
-    return result
+    return allPayments
 }
-const getPaymentByIdFromDB = async()=>{}
+const getPaymentByIdFromDB = async(paymentId:string, tenantId:string)=>{
+const paymemtDetails  = await prisma.payment.findUniqueOrThrow({
+    where:{
+        id:paymentId,
+        rentalRequest:{
+            tenantId
+        }
+    },
+    include:{
+        rentalRequest:true
+    }
+})
+
+
+return paymemtDetails
+
+}
 
 export const paymentServices = {
     createPaymentIntoDB,

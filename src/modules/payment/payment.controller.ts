@@ -60,16 +60,38 @@ const getMyPayments = catchAsync(async(req:Request, res:Response, next:NextFunct
     throw new Error("Tenant id not found.")
   }
 
-  const myPayments = await paymentServices.getMyPaymentsFromDB(tenantId)
+  const allPayments = await paymentServices.getMyPaymentsFromDB(tenantId)
+
+const message = allPayments.length > 0 ?  "Payment history retrieved successfully.": "No payment record found"
+
 
     sendResponse(res, {
             success: true,
             statusCode: httpStatus.OK,
-            message: "My payments retrived successfully!!",
-            data: myPayments,
+            message,
+            data: allPayments,
         });
 })
-const getPaymentById = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
+const getPaymentById = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+
+  const paymentId = req.params.id
+    const tenantId = req.user?.id
+
+  if(!tenantId){
+    throw new Error("Tenant id not found.")
+  }
+  if(!paymentId){
+    throw new Error("Payment id is required in params.")
+  }
+
+  const result = await paymentServices.getPaymentByIdFromDB(paymentId as string, tenantId)
+  sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "Payment details retrived successfully!!",
+            data: result,
+        });
+})
 
 export const paymentController = {
     createPayment,

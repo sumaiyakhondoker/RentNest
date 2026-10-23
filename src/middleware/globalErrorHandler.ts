@@ -22,6 +22,9 @@ export const globalErrorHandler = (error:any, req:Request, res: Response, next:N
         }else if(error.code === 'P2025'){
             statusCode = httpStatus.BAD_REQUEST
             errorMessage=  "An operation failed because it depends on one or more records that were required but not found." 
+        }else if(error.code === 'P2028'){
+            statusCode = httpStatus.INTERNAL_SERVER_ERROR
+            errorMessage=  "A database transaction failed.." 
         }
     }else if(error instanceof Prisma.PrismaClientInitializationError){
         if(error.errorCode === 'P1000'){

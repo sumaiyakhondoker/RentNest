@@ -5,9 +5,7 @@ body:
   type: json
   content: "{   \r
 
-    \   \r
-
-    \   \"email\":\"maliha@mail.com\",\r
+    \  \"email\":\"waziha@mail.com\",\r
 
     \    \"password\":\"1234567\"\r
 
