@@ -161,6 +161,8 @@ console.log("Stripe session metadata:", session.metadata);
             throw new Error("Rental request is not approved.");
         }
 
+        console.log('hitted befor update');
+
         await tx.payment.update({
             where: { id: paymentId },
             data: {
@@ -184,8 +186,29 @@ console.log("Stripe session metadata:", session.metadata);
 
     return { received: true };
 };
+
+
+const getMyPaymentsFromDB = async(tenantId:string)=>{
+    const result = await prisma.payment.findMany({
+        where:{
+            rentalRequest:{
+                tenantId
+            }
+        },
+        include:{
+            rentalRequest:true
+        }
+    })
+
+    return result
+}
+const getPaymentByIdFromDB = async()=>{}
+
 export const paymentServices = {
     createPaymentIntoDB,
-    handleStripeWebhookIntoDB 
+    handleStripeWebhookIntoDB,
+    getMyPaymentsFromDB,
+    getPaymentByIdFromDB
+
 }
 

@@ -10,6 +10,7 @@ import { rentalRequestRoutes } from "./modules/rentalRequest/rentalRequest.route
 import { adminRoutes } from "./modules/admin/admin.route";
 import { propertyRoutes } from "./modules/property/property.route";
 import { paymentRoutes } from "./modules/payment/payment.route";
+import { notFound } from "./middleware/notFound";
 
 const app:Application = express()
 
@@ -40,6 +41,7 @@ app.use('/api/payments', paymentRoutes)
 app.use('/api/admin', adminRoutes)
 
 
+app.use(notFound)
 
 
 

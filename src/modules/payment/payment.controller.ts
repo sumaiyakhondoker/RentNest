@@ -52,8 +52,28 @@ const confirmPayment =  catchAsync(async(req:Request, res:Response, next:NextFun
             data: result,
         });
     })
+const getMyPayments = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
+
+  const tenantId = req.user?.id
+
+  if(!tenantId){
+    throw new Error("Tenant id not found.")
+  }
+
+  const myPayments = await paymentServices.getMyPaymentsFromDB(tenantId)
+
+    sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "My payments retrived successfully!!",
+            data: myPayments,
+        });
+})
+const getPaymentById = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{})
 
 export const paymentController = {
     createPayment,
-    confirmPayment
+    confirmPayment,
+    getMyPayments,
+getPaymentById
 }

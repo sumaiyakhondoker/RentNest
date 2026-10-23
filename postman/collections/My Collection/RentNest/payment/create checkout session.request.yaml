@@ -1,11 +1,11 @@
 $kind: http-request
-url: http://localhost:5000/api/payments/create
+url: http://localhost:5000/api/blogs
 method: POST
 body:
   type: json
   content: "{\r
 
-    \    \"rentalRequestId\": \"5fe2c9d7-1ddf-4fb3-aaf5-0f26ccd90272\"\r
+    \    \"rentalRequestId\": \"d9f5a9d0-810d-4b15-96d2-c614fcf3b0ca\"\r
 
     }"
 order: 1000

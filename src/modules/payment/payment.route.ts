@@ -8,8 +8,8 @@ const router = Router()
 router.post('/create', auth(Role.TENANT), paymentController.createPayment)
 router.post('/confirm', paymentController.confirmPayment)
 
-// router.get('/', auth(Role.TENANT),  paymentController.getMyPayments)
-// router.get('/:id',auth(Role.TENANT),  paymentController.getPaymentById)
+router.get('/', auth(Role.TENANT),  paymentController.getMyPayments)
+router.get('/:id',auth(Role.TENANT),  paymentController.getPaymentById)
 
 
 export const paymentRoutes =  router
