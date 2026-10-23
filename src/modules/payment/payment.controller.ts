@@ -43,7 +43,7 @@ const confirmPayment =  catchAsync(async(req:Request, res:Response, next:NextFun
            throw new Error("Missing or invalid Stripe signature.")
         }
 
-        const result = await paymentServices.handleStripeWebhookIntoDB(req.body as Buffer,signature);
+        const result = await paymentServices.confirmPaymentIntoDB(req.body as Buffer,signature);
 
         sendResponse(res, {
             success: true,

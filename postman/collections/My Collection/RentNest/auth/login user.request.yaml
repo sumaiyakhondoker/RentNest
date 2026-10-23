@@ -5,9 +5,9 @@ body:
   type: json
   content: "{   \r
 
-    \  \"email\":\"waziha@mail.com\",\r
+    \  \"email\":\"admin@rentnest.com\",\r
 
-    \    \"password\":\"1234567\"\r
+    \    \"password\":\"admin@rentnest\"\r
 
     }"
 order: 2000

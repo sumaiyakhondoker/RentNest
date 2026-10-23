@@ -19,11 +19,11 @@ const createPaymentIntoDB = async(tenantId:string, rentalRequestId: string)=>{
     })
 
     if(!rentalRequest){
-        throw new Error("You are not authorized to create a payment for this rental request.")
+        throw new Error("You can't create a payment for this rental request. Because this is not your rental request.")
     }
 
 
-    const amount = rentalRequest.property.price
+    const propertyPrice = rentalRequest.property.price
 
     const isPaymentExist = await prisma.payment.findUnique({
         where:{
@@ -32,7 +32,7 @@ const createPaymentIntoDB = async(tenantId:string, rentalRequestId: string)=>{
     })
 
     if(isPaymentExist){
-        throw new Error("A payment record already exists for this rental request.")
+        throw new Error("A payment already exists for that rental request.")
     }
 
        if(rentalRequest.status !== RentalRequestStatus.APPROVED){
@@ -42,7 +42,7 @@ const createPaymentIntoDB = async(tenantId:string, rentalRequestId: string)=>{
     const createdPayment = await prisma.payment.create({
         data:{
             rentalRequestId,
-            amount,
+            amount:propertyPrice,
             method:'CARD',
             provider: PaymentProvider.STRIPE,
             status:PaymentStatus.PENDING
@@ -60,7 +60,7 @@ try {
                 product_data: {
                     name: rentalRequest.property.title,
                 },
-                unit_amount: amount * 100,
+                unit_amount: propertyPrice * 100,
             },
             quantity: 1,
         },
@@ -73,7 +73,7 @@ try {
         tenantId,
     },
 });
-} catch (error) {
+} catch (error:any) {
     await prisma.payment.update({
     where:{
         id: createdPayment.id
@@ -83,7 +83,7 @@ try {
     }
 })
 
-throw error
+throw new Error(error.message)
 }
 
 
@@ -97,7 +97,7 @@ const updatedPayment = await prisma.payment.update({
 })
 
 return {
-    payment: updatedPayment,
+    paymentInfo: updatedPayment,
     checkoutUrl : session.url
 }
 
@@ -106,7 +106,7 @@ return {
 }
 
 
-const handleStripeWebhookIntoDB = async (payload: Buffer,signature: string) => {
+const confirmPaymentIntoDB = async (payload: Buffer,signature: string) => {
     const event = stripe.webhooks.constructEvent(
         payload,
         signature,
@@ -117,18 +117,18 @@ const handleStripeWebhookIntoDB = async (payload: Buffer,signature: string) => {
         return { received: true };
     }
 
-    const session = event.data.object;
+    const paymentSession = event.data.object;
 
-    if (session.payment_status !== "paid") {
+    if (paymentSession.payment_status !== "paid") {
         return { received: true };
     }
 
-    const paymentId = session.metadata?.paymentId;
-    const rentalRequestId = session.metadata?.rentalRequestId;
+    const paymentId = paymentSession.metadata?.paymentId;
+    const rentalRequestId = paymentSession.metadata?.rentalRequestId;
 
 
     if (!paymentId || !rentalRequestId) {
-        throw new Error("Payment metadata is missing.");
+        throw new Error("Metadata of payment not found.");
     }
 
 
@@ -141,11 +141,11 @@ const handleStripeWebhookIntoDB = async (payload: Buffer,signature: string) => {
         });
 
         if (!payment) {
-            throw new Error("Payment record not found.");
+            throw new Error("Payment not found.");
         }
 
         if (payment.rentalRequestId !== rentalRequestId) {
-            throw new Error("Payment rental request mismatch.");
+            throw new Error("Rental request id didn't match with the payment's rental request id.");
         }
 
         if (payment.status === PaymentStatus.COMPLETED) {
@@ -157,11 +157,11 @@ const handleStripeWebhookIntoDB = async (payload: Buffer,signature: string) => {
         });
 
         if (!rentalRequest) {
-            throw new Error("Rental request not found.");
+            throw new Error("Rental request not found in database.");
         }
 
         if (rentalRequest.status !== RentalRequestStatus.APPROVED) {
-            throw new Error("Rental request is not approved.");
+            throw new Error("The status of rental request is not approved.");
         }
 
 
@@ -169,19 +169,23 @@ const handleStripeWebhookIntoDB = async (payload: Buffer,signature: string) => {
             where: { id: paymentId },
             data: {
                 status: PaymentStatus.COMPLETED,
-                paidAt: new Date(),
-                transactionId: session.id,
+                transactionId: paymentSession.id,
+                paidAt: new Date()
             },
         });
 
         await tx.rentalRequest.update({
-            where: { id: rentalRequestId },
-            data: { status: RentalRequestStatus.ACTIVE },
+            where: { 
+                id: rentalRequestId 
+            },
+            data: {
+                 status: RentalRequestStatus.ACTIVE
+                 },
         });
     },
      {
-        maxWait: 10000,
-        timeout: 20000,
+        maxWait: 11000,
+        timeout: 22000,
     }
 
 );
@@ -224,7 +228,7 @@ return paymemtDetails
 
 export const paymentServices = {
     createPaymentIntoDB,
-    handleStripeWebhookIntoDB,
+    confirmPaymentIntoDB,
     getMyPaymentsFromDB,
     getPaymentByIdFromDB
 
