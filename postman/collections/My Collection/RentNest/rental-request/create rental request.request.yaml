@@ -5,11 +5,13 @@ body:
   type: json
   content: "{\r
 
-    \  \"propertyId\": \"06bb78a1-2bc4-44c7-b3c2-53e2b1a3a7a7\",\r
+    \  \"propertyId\": \"c15ce85a-896a-4840-904f-57c6cd1bd551\",\r
 
-    \  \"moveInDate\": \"2026-11-05T00:00:00.000Z\",\r
+    \  \"moveInDate\": \"2026-10-23T00:00:00.000Z\",\r
 
-    \  \"message\": \"I am a student looking for an affordable room near my university.\"\r
+    \  \"leaseEndDate\": \"2026-10-24T00:00:00.000Z\",\r
+
+    \  \"message\": \"I am interested in renting this property for my family. Please share the rental terms.\"\r
 
     }"
 order: 1000

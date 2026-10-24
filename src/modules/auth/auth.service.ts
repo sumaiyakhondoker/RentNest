@@ -17,7 +17,9 @@ if(isUserExist){
 }
 
 const hashedPassword = await bcrypt.hash(password, Number(config.bcrypt_salt_rounds))
-
+if(role === 'ADMIN'){
+    throw new Error("You can't register as admin.")
+}
 const createdUser = await prisma.user.create({
     data:{
         name,

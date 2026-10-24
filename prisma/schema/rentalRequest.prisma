@@ -10,6 +10,7 @@ model RentalRequest {
     property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
     
     moveInDate DateTime?
+    leaseEndDate DateTime?
     message    String?
     status RentalRequestStatus @default(PENDING)
 

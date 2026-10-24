@@ -13,6 +13,7 @@ const createRentalRequest = catchAsync(async(req:Request, res:Response, next:Nex
    
 const { propertyId,
   moveInDate,
+  leaseEndDate,
   message
   } = req.body
 
@@ -32,8 +33,13 @@ const { propertyId,
 
  
 
-  if(moveInDate &&  (typeof moveInDate !== "string" || Number.isNaN(Date.parse(moveInDate)))){
+  if(!moveInDate || typeof moveInDate !== "string" || Number.isNaN(Date.parse(moveInDate))){
     throw new Error("Please provide a valid move in date like this: 'YYYY-MM-DD'")
+
+  }
+
+  if(!leaseEndDate || typeof leaseEndDate !== "string" || Number.isNaN(Date.parse(leaseEndDate))){
+    throw new Error("Please provide a valid lease end date like this: 'YYYY-MM-DD'")
 
   }
 
@@ -41,12 +47,31 @@ const { propertyId,
   if(message && typeof message !== 'string'){
     throw new Error('Message must be a string')
   }
+
+  const presentDate = new Date(Date.now())
   
   const parsedMoveInDate = new Date(moveInDate)
+  const parsedLeaseEndDate = new Date(leaseEndDate)
+
+  if(parsedMoveInDate < presentDate){
+    throw new Error("Move in date must be later then the present date.")
+
+  }
+
+    if(parsedLeaseEndDate > presentDate){
+    throw new Error("Lease end date must be later then the present date.")
+
+  }
+
+  if(parsedMoveInDate >= parsedLeaseEndDate){
+    throw new Error("Lease end date must be later then the move in date.")
+
+  }
 
   const rentalRequestData:IRentalRequestPayload = {
   propertyId,
   moveInDate:parsedMoveInDate,
+  leaseEndDate:parsedLeaseEndDate,
   message,
   tenantId
   }

@@ -171,7 +171,7 @@ const getMyProfile = catchAsync(async(req:Request, res:Response, next:NextFuncti
             }
   })
 
-  res.send('get my profile')
+
 
 })
 

@@ -184,8 +184,8 @@ const confirmPaymentIntoDB = async (payload: Buffer,signature: string) => {
         });
     },
      {
-        maxWait: 11000,
-        timeout: 22000,
+        maxWait: 10000,
+        timeout: 20000,
     }
 
 );

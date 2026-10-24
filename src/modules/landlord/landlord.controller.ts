@@ -199,8 +199,8 @@ const updateRentalRequestStatus = catchAsync(async(req:Request, res:Response, ne
     throw new Error('Please give a valid rental request id and it must be a string')
      }
 
-     if(status !== RentalRequestStatus.APPROVED && status !== RentalRequestStatus.REJECTED){
-    throw new Error("Rental request status must be either 'APPROVED' or 'REJECTED'.")
+     if(status !== RentalRequestStatus.APPROVED && status !== RentalRequestStatus.REJECTED && status !== RentalRequestStatus.COMPLETED){
+    throw new Error("Rental request status must be either 'APPROVED','REJECTED' or 'COMPLETED'.")
 
      }
 

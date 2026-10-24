@@ -1,5 +1,5 @@
 $kind: http-request
-url: http://localhost:5000/api/landlord/requests/2ca96182-3dfc-4931-8518-170ea4ffee1c
+url: http://localhost:5000/api/landlord/requests/daab2f3e-8e35-41f2-877a-bbfe49491cc1
 method: PATCH
 body:
   type: json

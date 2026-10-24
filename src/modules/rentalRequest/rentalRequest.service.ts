@@ -43,6 +43,21 @@ const createRentalRequestIntoDB = async(payload:IRentalRequestPayload)=>{
     return createdRentalRequest
 }
  const getAllRentalRequestFromDB = async(tenantId:string)=>{
+
+    await prisma.rentalRequest.updateMany({
+        where:{
+            tenantId,
+            leaseEndDate:{
+                lt: new Date(Date.now())
+            }
+        },
+        data:{
+            status: 'COMPLETED'
+        }
+        
+
+    })
+
     const allRentalRequests = await prisma.rentalRequest.findMany({
         where:{
            tenantId

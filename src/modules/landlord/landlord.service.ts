@@ -138,10 +138,26 @@ const updateRentalRequestStatusIntoDB = async(landlordId:string, rentalRequestId
 
     }
 
-    if(isRentalRequestExist.status !== RentalRequestStatus.PENDING){
-          throw new Error('Only pending rental requests can be approved or rejected.')
 
-    }
+    if (isRentalRequestExist.status !== RentalRequestStatus.PENDING &&
+    isRentalRequestExist.status !== RentalRequestStatus.ACTIVE) {
+    throw new Error('Only pending or active rental requests can be updated.')
+}
+
+  if (
+    isRentalRequestExist.status === RentalRequestStatus.PENDING &&
+    rentalRequestStatus !== RentalRequestStatus.APPROVED &&
+    rentalRequestStatus !== RentalRequestStatus.REJECTED
+) {
+    throw new Error('Rental requests must have a PENDING status before the landlord can approve or reject them.')
+}
+
+if (
+    isRentalRequestExist.status === RentalRequestStatus.ACTIVE &&
+    rentalRequestStatus !== RentalRequestStatus.COMPLETED
+) {
+    throw new Error('Only active rental requests can be marked as completed.')
+}
 
     const result = await prisma.rentalRequest.update({
         where:{
