@@ -59,8 +59,8 @@ const createProperty = catchAsync(
     }
 
     if (
-      (picture && typeof picture !== "string") ||
-      picture.trim().length === 0
+      picture &&
+      (typeof picture !== "string" || picture.trim().length === 0)
     ) {
       throw new Error("Picture url must be a valid string.");
     }

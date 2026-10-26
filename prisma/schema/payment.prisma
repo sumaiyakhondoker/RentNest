@@ -1,22 +1,18 @@
-
-
-
-
 model Payment {
-id              String @id @default(uuid())
+    id String @id @default(uuid())
 
-rentalRequestId      String @unique
-rentalRequest RentalRequest @relation(fields: [rentalRequestId], references: [id])
+    rentalRequestId String?        @unique
+    rentalRequest   RentalRequest? @relation(fields: [rentalRequestId], references: [id], onDelete: SetNull)
 
-transactionId   String? @unique
-amount          Int
-method     String
-provider   PaymentProvider @default(STRIPE)
-status     PaymentStatus @default(PENDING)
+    transactionId String?         @unique
+    amount        Int
+    method        String
+    provider      PaymentProvider @default(STRIPE)
+    status        PaymentStatus   @default(PENDING)
 
-paidAt     DateTime?
-createdAt       DateTime @default(now())
-updatedAt       DateTime @updatedAt
+    paidAt    DateTime?
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
 
-@@map("payments")
+    @@map("payments")
 }

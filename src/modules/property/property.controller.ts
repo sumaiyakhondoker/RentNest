@@ -8,7 +8,6 @@ import { IQueryPayload } from "./property.interface";
 const getAllProperties = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const query = req.query;
-    const amenities = req.query.amenity;
 
     const {
       minPrice,
@@ -20,6 +19,7 @@ const getAllProperties = catchAsync(
       category,
       location,
       search,
+      amenities,
     } = query;
 
     if (minPrice) {
@@ -68,10 +68,10 @@ const getAllProperties = catchAsync(
       throw new Error("Sort order must be either 'asc' or 'desc'.");
     }
 
-    if (location && location !== "string") {
+    if (location && typeof location !== "string") {
       throw new Error("Location must be a valid string.");
     }
-    if (category && category !== "string") {
+    if (category && typeof category !== "string") {
       throw new Error("Category must be a valid string.");
     }
 
@@ -80,7 +80,7 @@ const getAllProperties = catchAsync(
       minPrice: minPrice ? Number(query.minPrice) : 1,
       page: page ? Number(query.page) : 1,
       limit: limit ? Number(limit) : 10,
-      amenities: amenities as string[],
+      amenities: typeof amenities == "string" ? amenities.split(",") : [],
       sortBy: sortBy ? (sortBy as string) : "price",
       sortOrder: sortOrder ? (sortOrder as string) : "desc",
       category: category ? (category as string) : undefined,

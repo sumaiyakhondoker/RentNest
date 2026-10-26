@@ -35,7 +35,7 @@ const getAllPropertiesFromDB = async (query: IQueryPayload) => {
   const category = query.category;
   const amenities = query.amenities;
 
-  const queryBuilder = [];
+  const queryBuilder: PropertyWhereInput[] = [];
 
   queryBuilder.push({
     AND: [
@@ -45,12 +45,16 @@ const getAllPropertiesFromDB = async (query: IQueryPayload) => {
   });
 
   if (category) {
-    queryBuilder.push({ category: { categoryName: category } });
+    queryBuilder.push({
+      category: {
+        categoryName: category,
+      },
+    });
   }
   if (location) {
     queryBuilder.push({ location: { equals: location } });
   }
-  if (amenities.length > 0) {
+  if (amenities && amenities.length > 0) {
     queryBuilder.push({ amenities: { hasSome: amenities } });
   }
 
@@ -73,27 +77,41 @@ const getAllPropertiesFromDB = async (query: IQueryPayload) => {
         },
       },
     );
+
+    queryBuilder.push({ OR: searchBuilder });
   }
 
   const allProperties = await prisma.property.findMany({
     where: {
       AND: queryBuilder,
-      ...(search && { OR: searchBuilder }),
     },
     take: limit,
     skip,
     orderBy: {
       [sortBy as string]: sortOrder,
     },
+
+    include: {
+      landlord: {
+        omit: {
+          password: true,
+        },
+      },
+      reviews: true,
+    },
   });
-  const totalProperties = allProperties.length;
+  const totalPropertyCount = await prisma.property.count({
+    where: {
+      AND: queryBuilder,
+    },
+  });
   return {
     data: allProperties,
     meta: {
       page: page,
       limit: limit,
-      totalProperties,
-      totalPages: Math.ceil(totalProperties / limit),
+      totalProperties: totalPropertyCount,
+      totalPages: Math.ceil(totalPropertyCount / limit),
     },
   };
 };

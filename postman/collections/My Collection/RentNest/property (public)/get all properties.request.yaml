@@ -1,22 +1,46 @@
 $kind: http-request
-url: http://localhost:5000/api/properties
+url: http://localhost:5000/api/properties?limit&sortOrder&sortBy
 method: GET
 queryParams:
-  - key: limit
-    value: "10"
-    disabled: true
-    description: ""
-  - key: maxPrice
-    value: "100000"
-    disabled: true
-    description: ""
-  - key: minPrice
+  - key: page
     value: "1"
     disabled: true
     description: ""
-  - key: page
-    value: "2"
+  - key: location
+    value: Mirpur
     disabled: true
+    description: ""
+  - key: category
+    value: Shop
+    disabled: true
+    description: ""
+  - key: search
+    value: Corner Retail Store
+    disabled: true
+    description: ""
+  - key: amenities
+    value: Elevator,Study Table
+    disabled: true
+    description: ""
+  - key: minPrice
+    value: null
+    disabled: true
+    description: ""
+  - key: maxPrice
+    value: null
+    disabled: true
+    description: ""
+  - key: limit
+    value: null
+    disabled: false
+    description: ""
+  - key: sortOrder
+    value: null
+    disabled: false
+    description: ""
+  - key: sortBy
+    value: null
+    disabled: false
     description: ""
 body:
   type: json

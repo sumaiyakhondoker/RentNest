@@ -5,9 +5,9 @@ body:
   type: json
   content: "{\r
 
-    \  \"propertyId\": \"93ee4c56-e380-4297-a7e4-87040a825e33\",\r
+    \  \"propertyId\": \"c15ce85a-896a-4840-904f-57c6cd1bd551\",\r
 
-    \  \"moveInDate\": \"2026-10-28T00:00:00.000Z\",\r
+    \  \"moveInDate\": \"2026-10-26T00:00:00.000Z\",\r
 
     \  \"leaseEndDate\": \"2027-10-27T00:00:00.000Z\",\r
 
