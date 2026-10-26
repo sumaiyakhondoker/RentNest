@@ -1,8 +1,13 @@
 import { AccountStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 
-const getAllUsersFromDB = async () => {
+const getAllUsersFromDB = async (adminId: string) => {
   const allUsers = await prisma.user.findMany({
+    where: {
+      id: {
+        not: adminId,
+      },
+    },
     omit: {
       password: true,
     },

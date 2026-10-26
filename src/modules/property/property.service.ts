@@ -19,95 +19,83 @@ const getPropertyDetailsByIdFromDB = async (propertyId: string) => {
   return property;
 };
 
-// const getAllPropertiesFromDB = async (query: IQueryPayload) => {
-const getAllPropertiesFromDB = async () => {
-  // const limit = query.limit;
-  // const page = query.page;
-  // const skip = (page - 1) * limit;
+const getAllPropertiesFromDB = async (query: IQueryPayload) => {
+  const limit = query.limit;
+  const page = query.page;
+  const skip = (page - 1) * limit;
 
-  // // sorting
-  // const sortBy = query.sortBy;
-  // const sortOrder = query.sortOrder;
-  // let orderBy =
-  //   sortBy?.toLowerCase() === "price"
-  //     ? {
-  //         [sortBy]: sortOrder,
-  //       }
-  //     : {};
+  // sorting
+  const sortBy = query.sortBy;
+  const sortOrder = query.sortOrder;
 
-  // // filtering
-  // const location = query.location;
-  // const maxPrice = query.maxPrice;
-  // const minPrice = query.minPrice;
-  // const category = query.category;
-  // const amenities = query.amenities;
+  // filtering
+  const location = query.location;
+  const maxPrice = query.maxPrice;
+  const minPrice = query.minPrice;
+  const category = query.category;
+  const amenities = query.amenities;
 
-  // const queryBuilder = [];
+  const queryBuilder = [];
 
-  // //   jodi default dei mane price kicu na dei tahole normally desc te ashar kotha na ?
-  // queryBuilder.push({
-  //   AND: [
-  //     { price: { lte: Number(maxPrice) } },
-  //     { price: { gte: Number(minPrice) } },
-  //   ],
-  // });
+  queryBuilder.push({
+    AND: [
+      { price: { lte: Number(maxPrice) } },
+      { price: { gte: Number(minPrice) } },
+    ],
+  });
 
-  // if (category) {
-  //   queryBuilder.push({ category: { categoryName: category } });
-  // }
-  // if (location) {
-  //   queryBuilder.push({ location: { equals: location } });
-  // }
-  // //   if (amenities) {
-  // //     queryBuilder.push({ amenities: { hasSome: amenities } });   //amenity howar kotha na nam ta 1st er?
-  // //   }
+  if (category) {
+    queryBuilder.push({ category: { categoryName: category } });
+  }
+  if (location) {
+    queryBuilder.push({ location: { equals: location } });
+  }
+  if (amenities.length > 0) {
+    queryBuilder.push({ amenities: { hasSome: amenities } });
+  }
 
-  // const search = query.search;
+  const search = query.search;
 
-  // const searchBuilder: PropertyWhereInput[] = [];
+  const searchBuilder: PropertyWhereInput[] = [];
 
-  // if (search) {
-  //   searchBuilder.push(
-  //     {
-  //       title: {
-  //         contains: search,
-  //         mode: "insensitive",
-  //       },
-  //     },
-  //     {
-  //       description: {
-  //         contains: search,
-  //         mode: "insensitive",
-  //       },
-  //     },
-  //   );
-  // }
+  if (search) {
+    searchBuilder.push(
+      {
+        title: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      {
+        description: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+    );
+  }
 
   const allProperties = await prisma.property.findMany({
-    //   where: {
-    //     AND: queryBuilder,
-    //     ...(search && { OR: searchBuilder }),
-    //   },
-    //   take: limit,
-    //   skip,
-    //   orderBy,
-    // });
-    // const totalPropertiesCount = await prisma.property.count({
-    //   where: {
-    //     AND: queryBuilder,
-    //   },
-    // });
-    // console.log(allProperties.length);
-    // return {
-    //   data: allProperties,
-    //   meta: {
-    //     page: page,
-    //     limit: limit,
-    //     totalProperties: totalPropertiesCount,
-    //     totalPages: Math.ceil(totalPropertiesCount / limit),
-    //   },
+    where: {
+      AND: queryBuilder,
+      ...(search && { OR: searchBuilder }),
+    },
+    take: limit,
+    skip,
+    orderBy: {
+      [sortBy as string]: sortOrder,
+    },
   });
-  return { total: allProperties.length, allProperties };
+  const totalProperties = allProperties.length;
+  return {
+    data: allProperties,
+    meta: {
+      page: page,
+      limit: limit,
+      totalProperties,
+      totalPages: Math.ceil(totalProperties / limit),
+    },
+  };
 };
 
 export const propertyServices = {

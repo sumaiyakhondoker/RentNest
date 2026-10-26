@@ -7,8 +7,8 @@ import { sendResponse } from "../../utils/sendResponse";
 
 const getAllUsers = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    // const adminId = req.user?.id;
-    const result = await adminServices.getAllUsersFromDB();
+    const adminId = req.user?.id;
+    const result = await adminServices.getAllUsersFromDB(adminId);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
