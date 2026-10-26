@@ -5,13 +5,11 @@ body:
   type: json
   content: "{\r
 
-    \    \"name\":\"Maliha\",\r
+    \    \"name\":\"Ariba\",\r
 
-    \    \"email\":\"malihaaa@gmail.com\",\r
+    \    \"email\":\"ariba@gmail.com\",\r
 
-    \    \"password\":\"1234567\",\r
-
-    \    \"role\": \"ADMIN\"\r
+    \    \"password\":\"1234567\"\r
 
     \   \r
 

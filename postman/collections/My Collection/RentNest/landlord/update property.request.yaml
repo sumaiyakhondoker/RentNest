@@ -1,4 +1,7 @@
 $kind: http-request
-url: http://localhost:5000/api/landlord/requests/9a2ad16b-bddb-4597-844d-1b700d480614
-method: PATCH
+url: http://localhost:5000/api/landlord/properties/db216abe-e115-4a82-bf5a-9c5cbe9ca620
+method: PUT
+body:
+  type: json
+  content: "{\r\n    \"location\":\"Uttara\"\r\n}"
 order: 3000

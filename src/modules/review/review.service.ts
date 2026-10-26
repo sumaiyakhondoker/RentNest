@@ -1,46 +1,46 @@
-import { prisma } from "../../lib/prisma"
-import { IReviewPayload } from "./review.interface"
+import { prisma } from "../../lib/prisma";
+import { IReviewPayload } from "./review.interface";
 
+const createReviewIntoDB = async (payload: IReviewPayload) => {
+  const { propertyId, tenantId } = payload;
+  const isPropertyExist = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+    },
+  });
 
-const createReviewIntoDB = async(payload:IReviewPayload)=>{
-    const {propertyId,tenantId}= payload
-    const isPropertyExist = await prisma.property.findUnique({
-        where:{
-            id:propertyId
-        }
-    })
+  if (!isPropertyExist) {
+    throw new Error(
+      "You can't create review because this property does not exist.",
+    );
+  }
 
-    if(!isPropertyExist){
-        throw new Error("You can't create review because this property does not exist.")
-    }
+  const rentalRequest = await prisma.rentalRequest.findFirst({
+    where: {
+      propertyId,
+      tenantId,
+    },
+  });
 
-    const isRentalRequestCompleted = await prisma.rentalRequest.findFirst({
-        where:{
-            propertyId,
-            tenantId,
-            status: 'COMPLETED'
+  if (!rentalRequest) {
+    throw new Error(
+      "You are not the tenant of that property so you can't create review.",
+    );
+  }
 
-        }
-    })
+  if (rentalRequest.status !== "COMPLETED") {
+    throw new Error("Your rental request status is not COMPLETED.");
+  }
 
-    if(!isRentalRequestCompleted){
-        throw new Error("Your rental request not found or it's status is not completed.")
+  const createdReview = await prisma.review.create({
+    data: {
+      ...payload,
+    },
+  });
 
-    }
+  return createdReview;
+};
 
-
-    const createdReview = await prisma.review.create({
-    data:{
-        
-        ...payload
-        
-    }
-})
-
-return createdReview
-}
-
-
-export const reviewServices= {
-    createReviewIntoDB
-}
+export const reviewServices = {
+  createReviewIntoDB,
+};

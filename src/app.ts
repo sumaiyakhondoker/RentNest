@@ -1,4 +1,3 @@
-import  httpStatus  from 'http-status';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 

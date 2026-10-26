@@ -5,11 +5,11 @@ body:
   type: json
   content: "{\r
 
-    \    \"propertyId\": \"258a120d-6a4a-4842-a028-37bb6ed23f94\",\r
+    \    \"propertyId\": \"6c96faa1-7b35-40fc-b9d1-085a9f502fcf\",\r
 
-    \    \"rating\":4,\r
+    \    \"rating\":5,\r
 
-    \    \"comment\": \"This is a nice room with a beautiful environment\"\r
+    \    \"comment\": \"Nice environment\"\r
 
     \    \r
 

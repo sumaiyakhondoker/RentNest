@@ -5,19 +5,19 @@ body:
   type: json
   content: "{\r
 
-    \  \"title\": \"Affordable Student Living Room\",\r
+    \  \"title\": \"Comfortable Shared Living Space\",\r
 
-    \  \"description\": \"A budget-friendly furnished room with essential facilities, suitable for university students and interns.\",\r
+    \  \"description\": \"A clean shared accommodation with common facilities and a friendly environment for students and young professionals.\",\r
 
-    \  \"picture\": \"https://example.com/student-room.jpg\",\r
+    \  \"picture\": \"https://example.com/shared-living.jpg\",\r
 
-    \  \"amenities\": [\"Bed\", \"Study Table\", \"WiFi\", \"Fan\"],\r
+    \  \"amenities\": [\"WiFi\", \"Common Kitchen\", \"Laundry\", \"Water Supply\"],\r
 
-    \  \"location\": \"Nilkhet\",\r
+    \  \"location\": \"Shantinagar\",\r
 
-    \  \"price\": 6500,\r
+    \  \"price\": 5500,\r
 
-    \  \"categoryId\": \"4fc081be-069b-472e-a469-25f898e9abf7\"\r
+    \  \"categoryId\": \"70798114-2637-4408-994c-c1533cb29f5e\"\r
 
-    }"
+    }\r\n"
 order: 1000

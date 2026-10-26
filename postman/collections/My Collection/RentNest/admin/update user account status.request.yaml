@@ -1,4 +1,11 @@
 $kind: http-request
-url: ""
-method: GET
+url: http://localhost:5000/api/admin/users/77bceecc-368f-4d44-96b5-70dc3493ec22
+method: PATCH
+body:
+  type: json
+  content: "{\r
+
+    \    \"accountStatus\":\"BANNED\"\r
+
+    }"
 order: 1000

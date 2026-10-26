@@ -1,6 +1,23 @@
 $kind: http-request
 url: http://localhost:5000/api/properties
 method: GET
+queryParams:
+  - key: limit
+    value: "10"
+    disabled: true
+    description: ""
+  - key: maxPrice
+    value: "100000"
+    disabled: true
+    description: ""
+  - key: minPrice
+    value: "1"
+    disabled: true
+    description: ""
+  - key: page
+    value: "2"
+    disabled: true
+    description: ""
 body:
   type: json
   content: ""
