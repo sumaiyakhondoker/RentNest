@@ -1,5 +1,5 @@
 $kind: http-request
-url: http://localhost:5000/api/landlord/properties/db216abe-e115-4a82-bf5a-9c5cbe9ca620
+url: https://rent-nest-rose.vercel.app/api/landlord/properties/db216abe-e115-4a82-bf5a-9c5cbe9ca620
 method: PUT
 body:
   type: json

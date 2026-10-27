@@ -1,4 +1,4 @@
 $kind: http-request
-url: http://localhost:5000/api/auth/me
+url: https://rent-nest-rose.vercel.app/api/auth/me
 method: GET
 order: 3000

@@ -1,5 +1,5 @@
 $kind: http-request
-url: http://localhost:5000/api/payments/create
+url: https://rent-nest-rose.vercel.app/api/payments/create
 method: POST
 body:
   type: json

@@ -1,5 +1,5 @@
 $kind: http-request
-url: http://localhost:5000/api/landlord/requests/6c96faa1-7b35-40fc-b9d1-085a9f502fcf
+url: https://rent-nest-rose.vercel.app/api/landlord/requests/6c96faa1-7b35-40fc-b9d1-085a9f502fcf
 method: PATCH
 body:
   type: json

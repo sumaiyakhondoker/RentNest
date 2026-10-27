@@ -1,4 +1,4 @@
 $kind: http-request
-url: http://localhost:5000/api/rentals/da010cfb-e817-4462-af41-1d32dd4f86be
+url: https://rent-nest-rose.vercel.app/api/rentals/da010cfb-e817-4462-af41-1d32dd4f86be
 method: GET
 order: 3000

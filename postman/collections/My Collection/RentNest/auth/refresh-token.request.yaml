@@ -1,4 +1,4 @@
 $kind: http-request
-url: http://localhost:5000/api/auth/refresh-token
+url: https://rent-nest-rose.vercel.app/api/auth/refresh-token
 method: POST
 order: 4000

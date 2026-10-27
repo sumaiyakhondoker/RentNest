@@ -1,5 +1,5 @@
 $kind: http-request
-url: http://localhost:5000/api/categories
+url: https://rent-nest-rose.vercel.app/api/categories
 method: POST
 body:
   type: json

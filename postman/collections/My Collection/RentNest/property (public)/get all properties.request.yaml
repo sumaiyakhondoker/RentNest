@@ -1,5 +1,5 @@
 $kind: http-request
-url: http://localhost:5000/api/properties?limit&sortOrder&sortBy
+url: https://rent-nest-rose.vercel.app/api/properties
 method: GET
 queryParams:
   - key: page
@@ -29,18 +29,6 @@ queryParams:
   - key: maxPrice
     value: null
     disabled: true
-    description: ""
-  - key: limit
-    value: null
-    disabled: false
-    description: ""
-  - key: sortOrder
-    value: null
-    disabled: false
-    description: ""
-  - key: sortBy
-    value: null
-    disabled: false
     description: ""
 body:
   type: json

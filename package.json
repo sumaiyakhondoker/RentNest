@@ -7,7 +7,7 @@
     "postinstall": "prisma generate",
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
-    "vercel-build": "esbuild src/app.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/app.js",
+    "vercel-build": "esbuild src/app.ts --bundle --platform=node --format=esm --packages=external --outfile=api/index.js",
     "start": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +30,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.6.5",
     "@types/pg": "^8.23.1",
+    "esbuild": "^0.28.2",
     "prisma": "^7.10.0",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3"
