@@ -5,19 +5,19 @@ body:
   type: json
   content: "{\r
 
-    \  \"title\": \"Comfortable Shared Living Space\",\r
+    \  \"title\": \"Modern Business Center\",\r
 
-    \  \"description\": \"A clean shared accommodation with common facilities and a friendly environment for students and young professionals.\",\r
+    \  \"description\": \"A modern commercial property offering professional workspaces, convenient access, and facilities for growing businesses.\",\r
 
-    \  \"picture\": \"https://example.com/shared-living.jpg\",\r
+    \  \"picture\": \"https://example.com/business-center.jpg\",\r
 
-    \  \"amenities\": [\"WiFi\", \"Common Kitchen\", \"Laundry\", \"Water Supply\"],\r
+    \  \"amenities\": [\"Parking\", \"Elevator\", \"Generator\", \"CCTV\"],\r
 
-    \  \"location\": \"Shantinagar\",\r
+    \  \"location\": \"Kawran Bazar, Dhaka\",\r
 
-    \  \"price\": 5500,\r
+    \  \"price\": 135000,\r
 
-    \  \"categoryId\": \"70798114-2637-4408-994c-c1533cb29f5e\"\r
+    \  \"categoryId\": \"d3482b4e-9bf6-4080-8d76-1b4008c14015\"\r
 
     }\r\n"
 order: 1000

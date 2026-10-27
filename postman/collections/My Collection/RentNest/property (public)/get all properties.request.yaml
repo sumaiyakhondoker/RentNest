@@ -1,33 +1,37 @@
 $kind: http-request
-url: https://rent-nest-rose.vercel.app/api/properties
+url: https://rent-nest-rose.vercel.app/api/properties?amenities=Elevator,Study Table&sortBy=title&sortOrder=asc&limit=5
 method: GET
 queryParams:
+  - key: search
+    value: Premium City Penthouse
+    disabled: true
+    description: ""
+  - key: amenities
+    value: Elevator,Study Table
+    disabled: false
+    description: ""
   - key: page
-    value: "1"
+    value: "2"
     disabled: true
     description: ""
   - key: location
     value: Mirpur
     disabled: true
     description: ""
+  - key: sortBy
+    value: title
+    disabled: false
+    description: ""
+  - key: sortOrder
+    value: asc
+    disabled: false
+    description: ""
+  - key: limit
+    value: "5"
+    disabled: false
+    description: ""
   - key: category
     value: Shop
-    disabled: true
-    description: ""
-  - key: search
-    value: Corner Retail Store
-    disabled: true
-    description: ""
-  - key: amenities
-    value: Elevator,Study Table
-    disabled: true
-    description: ""
-  - key: minPrice
-    value: null
-    disabled: true
-    description: ""
-  - key: maxPrice
-    value: null
     disabled: true
     description: ""
 body:

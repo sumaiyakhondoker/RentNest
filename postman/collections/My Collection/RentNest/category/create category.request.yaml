@@ -5,9 +5,9 @@ body:
   type: json
   content: "{\r
 
-    \  \"categoryName\": \"Other\",\r
+    \  \"categoryName\": \"Fruit shop\",\r
 
-    \  \"description\": \"Other types of properties that do not belong to any existing category.\"\r
+    \  \"description\": \"Fruit shop type properties.\"\r
 
     }"
 order: 1000

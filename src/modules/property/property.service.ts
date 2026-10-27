@@ -106,7 +106,7 @@ const getAllPropertiesFromDB = async (query: IQueryPayload) => {
     },
   });
   return {
-    data: allProperties,
+    allProperties,
     meta: {
       page: page,
       limit: limit,

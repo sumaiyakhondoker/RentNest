@@ -1,7 +1,7 @@
 $kind: http-request
-url: https://rent-nest-rose.vercel.app/api/landlord/requests/6c96faa1-7b35-40fc-b9d1-085a9f502fcf
+url: https://rent-nest-rose.vercel.app/api/landlord/requests/e0600a98-7843-4488-b154-c9edd51da03c
 method: PATCH
 body:
   type: json
-  content: "{\r\n    \"status\":\"PENDING\"\r\n}"
+  content: "{\r\n    \"status\":\"APPROVED\"\r\n}"
 order: 5000

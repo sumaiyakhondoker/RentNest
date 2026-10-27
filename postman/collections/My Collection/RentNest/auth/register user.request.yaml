@@ -1,19 +1,21 @@
 $kind: http-request
-url: http://localhost:5000/api/auth/register
+url: http://rent-nest-rose.vercel.app/api/auth/register
 method: POST
 body:
   type: json
   content: "{\r
 
-    \    \"name\":\"faria\",\r
+    \    \"name\":\"sumi\",\r
 
-    \    \"email\":\"faria4e5@gmail.com\",\r
+    \    \"email\":\"sumi@gmail.com\",\r
 
     \    \"password\":\"1234567\",\r
 
-    \    \"phone\": \"0167\",\r
+    \    \"phone\": \"01679999994\",\r
 
-    \     \"profileImage\": \"https://ibb.co.com/k6cfYbFp\"\r
+    \    \"profileImage\": \"https://ibb.co.com/k6cfYbFp\"\r
+
+    \   \r
 
     \   \r
 

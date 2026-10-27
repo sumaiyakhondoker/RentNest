@@ -1,11 +1,11 @@
 $kind: http-request
-url: http://localhost:5000/api/reviews
+url: https://rent-nest-rose.vercel.app/api/reviews
 method: POST
 body:
   type: json
   content: "{\r
 
-    \    \"propertyId\": \"6c96faa1-7b35-40fc-b9d1-085a9f502fcf\",\r
+    \    \"propertyId\": \"fc9e83e6-7c98-49fe-9f44-005cca157582\",\r
 
     \    \"rating\":5,\r
 
