@@ -48,8 +48,6 @@ const registerUser = catchAsync(
       });
     }
 
-    console.log("");
-
     if (phone && (typeof phone !== "string" || phone.length != 11)) {
       return sendResponse(res, {
         success: false,
@@ -68,7 +66,6 @@ const registerUser = catchAsync(
       });
     }
 
-    console.log("phone length:", phone.length);
     const user = await authServices.registerUserIntoDB(payload);
 
     sendResponse(res, {
