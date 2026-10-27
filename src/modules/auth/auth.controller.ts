@@ -1,183 +1,193 @@
+import { NextFunction, Request, Response } from "express";
+import httpStatus from "http-status";
+import { authServices } from "./auth.service";
+import { catchAsync } from "../../utils/catchAsync";
+import { sendResponse } from "../../utils/sendResponse";
 
-import { NextFunction, Request, Response } from "express"
-import httpStatus from "http-status"
-import { authServices } from "./auth.service"
-import { catchAsync } from "../../utils/catchAsync"
-import { sendResponse } from "../../utils/sendResponse"
+const registerUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const payload = req.body;
+    const regexOfEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    const { name, email, password, phone, profileImage } = payload;
 
+    if (!name || !email || !password) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Name, email and password fields are required",
+        errorDetails: null,
+      });
+    }
 
+    if (typeof name !== "string" || name.trim().length < 3) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message:
+          "Name must be a valid string and it should contain at least 3 characters",
+        errorDetails: null,
+      });
+    }
 
-const registerUser = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-const payload = req.body
-const regexOfEmail =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (typeof email !== "string" || !regexOfEmail.test(email)) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Please provide a valid email address",
+        errorDetails: null,
+      });
+    }
 
-const {name,email, password} = payload
+    if (typeof password !== "string" || password.length < 7) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Password must be at least 7 characters",
+        errorDetails: null,
+      });
+    }
 
-if(!name || !email || !password){
-    return sendResponse(res, {
-        success:false,
-         statusCode:httpStatus.BAD_REQUEST,
-         message:'Name, email and password fields are required',
-         errorDetails: null
+    console.log("");
 
-    })
-}
+    if (phone && (typeof phone !== "string" || phone.length != 11)) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Phone number should contain 11 characters",
+        errorDetails: null,
+      });
+    }
 
-if(typeof name !== "string" || name.trim().length < 3 ){
- return sendResponse(res, {
-    success: false,
-    statusCode:httpStatus.BAD_REQUEST,
-    message: "Name must be at least 3 characters",
-    errorDetails: null
-  })
-} 
+    if (profileImage && typeof profileImage !== "string") {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Profile image url should be a valid string.",
+        errorDetails: null,
+      });
+    }
 
-if(typeof email !== "string" || !regexOfEmail.test(email) ){
- return sendResponse(res, {
-    success: false,
-    statusCode:httpStatus.BAD_REQUEST,
-    message: "Please provide a valid email address",
-    errorDetails: null
-  })
-} 
+    console.log("phone length:", phone.length);
+    const user = await authServices.registerUserIntoDB(payload);
 
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.CREATED,
+      message: "User registered successfully!!",
+      data: {
+        user,
+      },
+    });
+  },
+);
 
-if(typeof password !== "string" || password.length < 7 ){
- return sendResponse(res, {
-    success: false,
-    statusCode:httpStatus.BAD_REQUEST,
-    message: "Password must be at least 7 characters",
-    errorDetails: null
-  })
-} 
+const loginUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const payload = req.body;
 
-const user = await authServices.registerUserIntoDB(payload)
+    const regexOfEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
- sendResponse(res, {
-         success: true,
-            statusCode: httpStatus.CREATED,
-            message:'User registered successfully!!',
-            data:{
-                user
-            }
-    })
+    const { email, password } = payload;
 
+    if (!email || !password) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Email and password fields are required",
+        errorDetails: null,
+      });
+    }
 
-        
-})
+    if (typeof email !== "string" || !regexOfEmail.test(email)) {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Please provide a valid email address",
+        errorDetails: null,
+      });
+    }
 
-const loginUser = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-const payload = req.body
+    if (typeof password !== "string") {
+      return sendResponse(res, {
+        success: false,
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Password must be a string",
+        errorDetails: null,
+      });
+    }
 
-const regexOfEmail =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const { accessToken, refreshToken, user } =
+      await authServices.loginUserIntoDB(payload);
 
-const {email, password} = payload
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24,
+    });
 
-if(!email || !password){
-    return sendResponse(res, {
-        success:false,
-        statusCode:httpStatus.BAD_REQUEST,
-         message:'Email and password fields are required',
-         errorDetails: null
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    });
 
-    })
-}
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "User logged in successfully!!",
+      data: {
+        accessToken,
+        refreshToken,
+        user,
+      },
+    });
+  },
+);
 
-if(typeof email !== "string" || !regexOfEmail.test(email)){
- return sendResponse(res, {
-    success: false,
-    statusCode:httpStatus.BAD_REQUEST,
-    message: "Please provide a valid email address",
-    errorDetails: null
-  })
-} 
+const refreshToken = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const refreshToken = req.cookies.refreshToken;
+    const { accessToken } = await authServices.refreshToken(refreshToken);
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24,
+    });
 
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Token refreshed successfully!!",
+      data: {
+        accessToken,
+      },
+    });
+  },
+);
+const getMyProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.user?.id;
 
-if(typeof password !== "string"){
- return sendResponse(res, {
-    success: false,
-    statusCode:httpStatus.BAD_REQUEST,
-    message: "Password must be a string",
-    errorDetails: null
-  })
-} 
+    const profile = await authServices.getMyProfileFromDB(userId as string);
 
-const {accessToken, refreshToken,user} = await authServices.loginUserIntoDB(payload)
-
-res.cookie("accessToken", accessToken, {
-  httpOnly:true,
-  secure:false,
-  sameSite:"none",
-  maxAge: 1000 * 60 * 60 * 24
-})
-
-res.cookie("refreshToken", refreshToken, {
-  httpOnly:true,
-  secure:false,
-  sameSite:"none",
-  maxAge: 1000 * 60 * 60 * 24 * 7
-})
-
-
-sendResponse(res, {
-     success: true,
-            statusCode: httpStatus.OK,
-            message:'User logged in successfully!!',
-            data:{
-             accessToken,
-             refreshToken,
-             user
-            }
-})
-
-})
-
-const refreshToken = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-    const refreshToken = req.cookies.refreshToken
-    const {accessToken} = await authServices.refreshToken(refreshToken)
-  res.cookie("accessToken", accessToken, {
-  httpOnly:true,
-  secure:false,
-  sameSite:"none",
-  maxAge: 1000 * 60 * 60 * 24
-})
-
-sendResponse(res, {
-     success: true,
-            statusCode: httpStatus.OK,
-            message:'Token refreshed successfully!!',
-            data:{
-             accessToken
-            }
-})
-
-
-})
-const getMyProfile = catchAsync(async(req:Request, res:Response, next:NextFunction)=>{
-
-
-  const userId = req.user?.id
-
-  const profile = await authServices.getMyProfileFromDB(userId as string)
-
-  sendResponse(res,{
-            success: true,
-            statusCode: httpStatus.OK,
-            message:'Current user profile retrived successfully!!',
-            data:{
-               profile 
-
-            }
-  })
-
-
-
-})
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Current user profile retrived successfully!!",
+      data: {
+        profile,
+      },
+    });
+  },
+);
 
 export const authController = {
-    registerUser,
-    loginUser,
-    refreshToken,
-    getMyProfile
-} 
+  registerUser,
+  loginUser,
+  refreshToken,
+  getMyProfile,
+};
