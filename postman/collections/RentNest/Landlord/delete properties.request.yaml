@@ -1,5 +1,0 @@
-$kind: http-request
-url: localhost:5000/api/landlord/properties/4cac102d-0b8a-4bc4-82f3-bce6b425ac9a
-method: DELETE
-settings: {}
-order: 3000

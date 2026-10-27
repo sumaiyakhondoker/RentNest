@@ -1,4 +1,0 @@
-$kind: http-request
-url: https://rent-nest-rose.vercel.app/api/payments/9ec879a5-faa0-47a5-9755-78098e1c1e90
-method: GET
-order: 3000

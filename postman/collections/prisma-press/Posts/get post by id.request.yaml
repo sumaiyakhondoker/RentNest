@@ -1,4 +1,0 @@
-$kind: http-request
-url: http://localhost:5000/api/posts/de8f0a63-2786-4a34-aee5-f678265db82f
-method: GET
-order: 3000

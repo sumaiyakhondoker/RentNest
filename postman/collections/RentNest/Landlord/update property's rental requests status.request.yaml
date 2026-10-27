@@ -1,8 +1,0 @@
-$kind: http-request
-url: localhost:5000/api/landlord/requests/b65a6988-9876-4db5-9e61-9c1fb24ae2f1
-method: PATCH
-body:
-  type: json
-  content: "{\r\n  \"status\" : \"APPROVED\"\r\n}"
-settings: {}
-order: 5000

@@ -1,7 +1,0 @@
-workspace:
-  id: 31a2f6e3-3e72-44bd-8f4f-1d33722662bb
-cloudResources:
-  collections:
-    ../postman/collections/My Collection: 49558011-0a6a489f-ac72-4100-bcaa-cfa65dd6d655
-    ../postman/collections/prisma-press: 49558011-e1fb5adc-14ae-4106-bb79-7c60d6598997
-    ../postman/collections/RentNest: 49558011-caf35af5-7781-419f-83c5-cc3042fefa91

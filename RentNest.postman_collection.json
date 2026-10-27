@@ -1,0 +1,465 @@
+{
+  "info": {
+    "name": "RentNest",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "register user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "http://rent-nest-rose.vercel.app/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"sumi\",\r\n    \"email\":\"sumi@gmail.com\",\r\n    \"password\":\"1234567\",\r\n    \"phone\": \"01679999994\",\r\n    \"profileImage\": \"https://ibb.co.com/k6cfYbFp\"\r\n   \r\n   \r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login as tenant",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{   \r\n  \"email\":\"faria@gmail.com\",\r\n    \"password\":\"1234567\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my  profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/auth/me"
+          },
+          "response": []
+        },
+        {
+          "name": "refresh-token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/auth/refresh-token"
+          },
+          "response": []
+        },
+        {
+          "name": "login as landlord",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{   \r\n   \"email\":\"fatiha@gmail.com\",\r\n    \"password\":\"1234567\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login as admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"admin@rentnest.com\",\r\n    \"password\": \"admin@rentnest\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "landlord",
+      "item": [
+        {
+          "name": "create property",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/landlord/properties",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Modern Business Center\",\r\n  \"description\": \"A modern commercial property offering professional workspaces, convenient access, and facilities for growing businesses.\",\r\n  \"picture\": \"https://example.com/business-center.jpg\",\r\n  \"amenities\": [\"Parking\", \"Elevator\", \"Generator\", \"CCTV\"],\r\n  \"location\": \"Kawran Bazar, Dhaka\",\r\n  \"price\": 135000,\r\n  \"categoryId\": \"d3482b4e-9bf6-4080-8d76-1b4008c14015\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete property",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/landlord/properties/fc9e83e6-7c98-49fe-9f44-005cca157582"
+          },
+          "response": []
+        },
+        {
+          "name": "update property",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/landlord/properties/fc9e83e6-7c98-49fe-9f44-005cca157582",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"location\":\"Uttara\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all rental requests for landlord properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/landlord/requests"
+          },
+          "response": []
+        },
+        {
+          "name": "update rental request status for landlord properties",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/landlord/requests/e0600a98-7843-4488-b154-c9edd51da03c",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\":\"APPROVED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "category",
+      "item": [
+        {
+          "name": "create category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/categories",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"categoryName\": \"Fruit shop\",\r\n  \"description\": \"Fruit shop type properties.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/categories"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "rental-request",
+      "item": [
+        {
+          "name": "create rental request",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/rentals",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"propertyId\": \"343fb89e-b054-48d5-a463-565a03f63397\",\r\n  \"moveInDate\": \"2026-10-29T00:00:00.000Z\",\r\n  \"leaseEndDate\": \"2026-10-27T00:00:00.000Z\",\r\n  \"message\": \"I am interested in renting this property. Please share the rental terms.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all rental requests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/rentals"
+          },
+          "response": []
+        },
+        {
+          "name": "get rental request by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/rentals/e0600a98-7843-4488-b154-c9edd51da03c"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "admin",
+      "item": [
+        {
+          "name": "update user account status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/admin/users/de41b145-f6e8-4b8e-b01e-4d64e6e15538",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"accountStatus\":\"BANNED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/admin/users"
+          },
+          "response": []
+        },
+        {
+          "name": "get all properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/admin/properties"
+          },
+          "response": []
+        },
+        {
+          "name": "get all rental requests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/admin/rentals"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "property (public)",
+      "item": [
+        {
+          "name": "get all properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rent-nest-rose.vercel.app/api/properties?amenities=Elevator,Study Table&sortBy=title&sortOrder=asc&limit=5",
+              "protocol": "https",
+              "host": [
+                "rent-nest-rose",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "Premium City Penthouse",
+                  "disabled": true,
+                  "description": ""
+                },
+                {
+                  "key": "amenities",
+                  "value": "Elevator,Study Table",
+                  "disabled": false,
+                  "description": ""
+                },
+                {
+                  "key": "page",
+                  "value": "2",
+                  "disabled": true,
+                  "description": ""
+                },
+                {
+                  "key": "sortBy",
+                  "value": "title",
+                  "disabled": false,
+                  "description": ""
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "asc",
+                  "disabled": false,
+                  "description": ""
+                },
+                {
+                  "key": "limit",
+                  "value": "5",
+                  "disabled": false,
+                  "description": ""
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get property by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/properties/fc9e83e6-7c98-49fe-9f44-005cca157582"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "payment",
+      "item": [
+        {
+          "name": "create checkout session",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/payments/create",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"rentalRequestId\": \"e0600a98-7843-4488-b154-c9edd51da03c\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/payments"
+          },
+          "response": []
+        },
+        {
+          "name": "get payment details by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/payments/9ec879a5-faa0-47a5-9755-78098e1c1e90"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "review",
+      "item": [
+        {
+          "name": "create review",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "https://rent-nest-rose.vercel.app/api/reviews",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"propertyId\": \"fc9e83e6-7c98-49fe-9f44-005cca157582\",\r\n    \"rating\":5,\r\n    \"comment\": \"Nice environment\"\r\n    \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "project's first page",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "https://rent-nest-rose.vercel.app/"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_1eck",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

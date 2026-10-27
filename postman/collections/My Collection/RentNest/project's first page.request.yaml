@@ -1,4 +1,0 @@
-$kind: http-request
-url: https://rent-nest-rose.vercel.app/
-method: GET
-order: 9000

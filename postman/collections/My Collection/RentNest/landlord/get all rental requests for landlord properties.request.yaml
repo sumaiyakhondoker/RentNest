@@ -1,4 +1,0 @@
-$kind: http-request
-url: https://rent-nest-rose.vercel.app/api/landlord/requests
-method: GET
-order: 4000

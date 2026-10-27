@@ -1,5 +1,0 @@
-$kind: http-request
-url: localhost:5000/api/landlord/requests
-method: GET
-settings: {}
-order: 4000

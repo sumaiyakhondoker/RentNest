@@ -1,4 +1,0 @@
-$kind: http-request
-url: http://localhost:5000/api/subscription/status
-method: GET
-order: 2000

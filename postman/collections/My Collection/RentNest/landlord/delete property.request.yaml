@@ -1,4 +1,0 @@
-$kind: http-request
-url: https://rent-nest-rose.vercel.app/api/landlord/properties/fc9e83e6-7c98-49fe-9f44-005cca157582
-method: DELETE
-order: 2000
