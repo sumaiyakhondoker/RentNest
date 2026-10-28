@@ -75,6 +75,7 @@ You can test the API endpoints using Postman. Postman-related resources are avai
 
 - **Live URL:** https://rent-nest-rose.vercel.app/
 - **GitHub Repository:** https://github.com/sumaiyakhondoker/RentNest
+- **Database ER Diagram:** https://drawsql.app/teams/sumaiya-khondoker/diagrams/rentnest
 
 ## Author
 
